@@ -25,11 +25,6 @@ export class Register extends Component {
                 passwordError: "",
             })
         }
-        if (inputPasswordAgain === inputPassword) {
-            this.setState({
-                passwordAgainError: "",
-            })
-        }
         if (inputLogin === "") {
             this.setState({
                 loginError: "Login cannot be empty!"
@@ -38,6 +33,11 @@ export class Register extends Component {
         if (inputPassword === "") {
             this.setState({
                 passwordError: "Password cannot be empty!"
+            })
+        }
+        if (inputPasswordAgain === inputPassword) {
+            this.setState({
+                passwordAgainError: "",
             })
         }
         if (inputLogin.length < 5) {
@@ -64,19 +64,22 @@ export class Register extends Component {
             })
         }
         if (validation) {
-            axios.post('/users/register', {
+            axios.post("/users/register", {
                 login: inputLogin,
                 password: inputPassword
             }).then(response => {
-                if (response.data === false) {
+                if (!response.data.done) {
                     this.setState({
-                        loginError: "This login is already taken!"
+                        loginError: response.data.msg
                     })
                 }
-                if (response.data === false) {
+                if (response.data.done) {
                     this.setState({
-                        registerDone: "Account created!"
+                        registerDone: response.data.msg
                     })
+                    setTimeout(() => {
+                        this.props.history.push("/");
+                    }, 3000);
                 }
             });
         }
@@ -91,7 +94,7 @@ export class Register extends Component {
                     <div className="error">{this.state.passwordError}</div>
                     <input id="passwordAgain" name="passwordAgain" placeholder="Type your password again" type="password" /> <br />
                     <div className="error">{this.state.passwordAgainError}</div>
-                    <button type="submit" onClick={this.handleSubmit}>Log in</button> <br />
+                    <button type="submit" onClick={this.handleSubmit}>Register</button> <br />
                     <div className="success">{this.state.registerDone}</div>
                     <a href="/">Have already account? Log in!</a>
                 </form>
