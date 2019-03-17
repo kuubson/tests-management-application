@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import ProtectedRoute from './components/ProtectedRoute'
 import Login from './components/Login'
 import Register from './components/Register';
-import Account from './components/Account'
+import Account from './components/Account';
 
 class App extends Component {
   render() {
@@ -12,7 +13,9 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Login} />
             <Route path="/register" component={Register} />
-            <Route path="/account" component={Account} />
+            <ProtectedRoute>
+              <Route path="/account" component={Account} />
+            </ProtectedRoute>
           </Switch>
         </div>
       </BrowserRouter>

@@ -4,7 +4,7 @@ export class Account extends Component {
     render() {
         return (
             <div>
-                Protected Route
+                Protected account page
             </div>
         )
     }

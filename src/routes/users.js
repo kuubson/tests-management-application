@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const passport = require('passport');
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
 router.post('/register', (req, res) => {
     const { login, password } = req.body;
@@ -46,9 +46,12 @@ router.post('/login', (req, res) => {
                     });
                 }
                 if (correctPassword) {
+                    const payload = { login }
+                    const token = jwt.sign(payload, process.env.SECRET_OR_KEY);
                     res.send({
                         done: true,
-                        msg: 'Logged in'
+                        msg: 'Logged in',
+                        token: token
                     });
                 } else {
                     res.send({

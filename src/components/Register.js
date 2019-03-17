@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import axios from 'axios';
+import { getJwt } from '../helpers/jwt'
 
 export class Register extends Component {
+    componentDidMount() {
+        const jwt = getJwt();
+        if (jwt) {
+            this.props.history.push('/account');
+        }
+    }
     state = {
         loginError: "",
         passwordError: "",

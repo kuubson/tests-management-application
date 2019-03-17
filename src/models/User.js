@@ -12,8 +12,8 @@ const UserSchema = new mongoose.Schema({
     role: {
         type: String,
         required: true,
-        default: 'student',
-        minlength: 7
+        minlength: 7,
+        default: 'student'
     },
     accountCreated: {
         type: Date,

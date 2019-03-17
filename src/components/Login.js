@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
 import $ from "jquery"
 import axios from 'axios'
+import { getJwt } from '../helpers/jwt'
 
 export class Login extends Component {
+    componentDidMount() {
+        const jwt = getJwt();
+        if (jwt) {
+            this.props.history.push('/account');
+        }
+    }
     state = {
         loginError: "",
         passwordError: "",
@@ -46,6 +53,7 @@ export class Login extends Component {
                     this.setState({
                         logginingSuccess: response.data.msg
                     })
+                    sessionStorage.setItem('jwt', response.data.token);
                     setTimeout(() => {
                         this.props.history.push("/account");
                     }, 3000);
