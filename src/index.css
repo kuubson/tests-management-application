@@ -29,4 +29,8 @@ body,
 .success {
   color: lawngreen;
 }
+
+.warning {
+  color: orange;
+}
 /*# sourceMappingURL=index.css.map */

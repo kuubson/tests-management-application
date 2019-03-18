@@ -6,12 +6,12 @@ export class ProtectedRoute extends Component {
     componentDidMount() {
         const jwt = getJwt();
         if (!jwt) {
-            this.props.history.push("/");
+            this.props.history.push("/login");
         }
     }
     render() {
         return (
-            <div>
+            <div className="flexfullwh">
                 {this.props.children}
             </div>
         )

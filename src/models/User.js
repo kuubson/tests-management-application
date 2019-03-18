@@ -12,15 +12,15 @@ const UserSchema = new mongoose.Schema({
     role: {
         type: String,
         required: true,
-        minlength: 7,
         default: 'student'
     },
     accountCreated: {
         type: Date,
+        required: true,
         default: Date.now
-    }
+    },
 })
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema, 'users');
 
 module.exports = User;

@@ -1,92 +1,109 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
 import axios from 'axios';
 import { getJwt } from '../helpers/jwt'
+
+const initialState = {
+    login: "",
+    password: "",
+    passwordAgain: "",
+    teacherKey: "",
+    teacherAuthWarning: "",
+    teacherAuthSuccess: "",
+    loginError: "",
+    passwordError: "",
+    passwordAgainError: "",
+    registerDone: ""
+}
 
 export class Register extends Component {
     componentDidMount() {
         const jwt = getJwt();
         if (jwt) {
-            this.props.history.push('/account');
+            this.props.history.push("/account");
         }
     }
-    state = {
-        loginError: "",
-        passwordError: "",
-        passwordAgainError: "",
-        registerDone: ""
+    state = initialState;
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    handleRedirect = (e) => {
+        this.props.history.push("/login");
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        let inputLogin = $("#login").val();
-        let inputPassword = $("#password").val();
-        let inputPasswordAgain = $("#passwordAgain").val();
         let validation = false;
-        if (inputLogin !== "" && inputLogin.length >= 5) {
+        if (this.state.login !== "" && this.state.login.length >= 5) {
             this.setState({
                 passwordError: "",
             })
         }
-        if (inputPassword !== "" && inputPassword.length >= 5) {
+        if (this.state.password !== "" && this.state.password.length >= 5) {
             this.setState({
                 passwordError: "",
             })
         }
-        if (inputLogin === "") {
+        if (this.state.login === "") {
             this.setState({
                 loginError: "Login cannot be empty!"
             })
         }
-        if (inputPassword === "") {
+        if (this.state.password === "") {
             this.setState({
                 passwordError: "Password cannot be empty!"
             })
         }
-        if (inputPasswordAgain === inputPassword) {
+        if (this.state.passwordAgain === this.state.password) {
             this.setState({
                 passwordAgainError: "",
             })
         }
-        if (inputLogin.length < 5) {
+        if (this.state.login.length < 5) {
             this.setState({
                 loginError: "Login should be at least 5 characters long!"
             })
         }
-        if (inputPassword.length < 5) {
+        if (this.state.password.length < 5) {
             this.setState({
                 passwordError: "Password should be at least 5 characters long!"
             })
         }
-        if (inputPasswordAgain !== inputPassword) {
+        if (this.state.passwordAgain !== this.state.password) {
             this.setState({
                 passwordAgainError: "Passwords do not matches!"
             })
         }
-        if (inputLogin !== "" && inputLogin.length >= 5 && inputPassword !== "" && inputPassword.length >= 5 && inputPasswordAgain === inputPassword) {
+        if (this.state.login !== "" && this.state.login.length >= 5 && this.state.password !== "" && this.state.password.length >= 5 && this.state.passwordAgain === this.state.password) {
             validation = true;
             this.setState({
                 loginError: "",
                 passwordError: "",
-                passwordAgainError: ""
+                passwordAgainError: "",
             })
         }
         if (validation) {
             axios.post("/users/register", {
-                login: inputLogin,
-                password: inputPassword
+                login: this.state.login,
+                password: this.state.password,
+                teacherKey: this.state.teacherKey
             }).then(response => {
                 if (!response.data.done) {
                     this.setState({
+                        initialState,
                         loginError: response.data.msg
                     })
                 }
                 if (response.data.done) {
                     this.setState({
-                        registerDone: response.data.msg
+                        initialState,
+                        registerDone: response.data.msg,
+                        teacherAuthWarning: response.data.teacherAuthWarning,
+                        teacherAuthSuccess: response.data.teacherAuthSuccess
                     })
                     setTimeout(() => {
-                        this.props.history.push("/");
-                    }, 3000);
+                        this.props.history.push("/login");
+                    }, 3500);
                 }
             });
         }
@@ -94,16 +111,19 @@ export class Register extends Component {
     render() {
         return (
             <div className="register flexfullwh">
-                <form className="register-form center">
-                    <input id="login" name="login" placeholder="Type your login" type="text" /> <br />
+                <form className="register-form center" onSubmit={this.handleSubmit}>
+                    <input id="login" name="login" placeholder="Type your login" type="text" onChange={this.handleChange} /> <br />
                     <div className="error">{this.state.loginError}</div>
-                    <input id="password" name="password" placeholder="Type your password" type="password" /> <br />
+                    <input id="password" name="password" placeholder="Type your password" type="password" onChange={this.handleChange} /> <br />
                     <div className="error">{this.state.passwordError}</div>
-                    <input id="passwordAgain" name="passwordAgain" placeholder="Type your password again" type="password" /> <br />
+                    <input id="passwordAgain" name="passwordAgain" placeholder="Type your password again" type="password" onChange={this.handleChange} /> <br />
                     <div className="error">{this.state.passwordAgainError}</div>
-                    <button type="submit" onClick={this.handleSubmit}>Register</button> <br />
+                    <input id="teacherKey" name="teacherKey" placeholder="Type teacher registration key" type="password" onChange={this.handleChange} /> <br />
+                    <div className="warning">{this.state.teacherAuthWarning}</div>
+                    <div className="success">{this.state.teacherAuthSuccess}</div>
+                    <button type="submit">Register</button> <br />
                     <div className="success">{this.state.registerDone}</div>
-                    <a href="/">Have already account? Log in!</a>
+                    <a href="/login">Have already account? Log in!</a>
                 </form>
             </div>
         )

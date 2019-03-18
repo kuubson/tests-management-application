@@ -1,12 +1,13 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
 const User = require('../models/User');
 
 router.post('/register', (req, res) => {
-    const { login, password } = req.body;
+    const { login, password, teacherKey } = req.body;
     User.findOne({
-        login: login
+        login
     }).then(user => {
         if (user) {
             res.send({
@@ -14,10 +15,23 @@ router.post('/register', (req, res) => {
                 msg: 'This login is already taken'
             });
         } else {
+            let teacherAuthWarning;
+            let teacherAuthSuccess;
             const newUser = new User({
                 login,
-                password
+                password,
             })
+            if (teacherKey == 'stk2019') {
+                newUser.role = 'teacher';
+                teacherAuthSuccess = 'Teacher key is right! Created teacher account!';
+                teacherAuthWarning = '';
+            } else if (teacherKey != "") {
+                teacherAuthWarning = 'Bad teacher key! Created standard student account!';
+                teacherAuthSuccess = '';
+            } else {
+                teacherAuthSuccess = '';
+                teacherAuthWarning = '';
+            }
             bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, (err, hash) => {
                 if (err) {
                     console.log(err);
@@ -25,7 +39,9 @@ router.post('/register', (req, res) => {
                 newUser.password = hash;
                 newUser.save().then(res.send({
                     done: true,
-                    msg: 'Account created!'
+                    msg: 'Account created!',
+                    teacherAuthWarning: teacherAuthWarning,
+                    teacherAuthSuccess: teacherAuthSuccess
                 })).catch(err => console.log(err));
             }))
         }
@@ -35,7 +51,7 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
     const { login, password } = req.body;
     User.findOne({
-        login: login
+        login
     }).then(user => {
         if (user) {
             bcrypt.compare(password, user.password, (err, correctPassword) => {
@@ -68,5 +84,12 @@ router.post('/login', (req, res) => {
         }
     })
 })
+
+router.get('/getUser', passport.authenticate('jwt', { session: false }), (req, res) => {
+    res.send({
+        login: req.user.login,
+        role: req.user.role
+    });
+});
 
 module.exports = router;

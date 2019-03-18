@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import $ from "jquery"
 import axios from 'axios'
 import { getJwt } from '../helpers/jwt'
 
@@ -11,27 +10,32 @@ export class Login extends Component {
         }
     }
     state = {
+        login: "",
+        password: "",
         loginError: "",
         passwordError: "",
         logginingError: "",
         logginingSuccess: ""
     }
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
     handleSubmit = (e) => {
         e.preventDefault();
-        let inputLogin = $("#login").val();
-        let inputPassword = $("#password").val();
         let validation = false;
-        if (inputLogin === "") {
+        if (this.state.login === "") {
             this.setState({
                 loginError: "Login cannot be empty!"
             })
         }
-        if (inputPassword === "") {
+        if (this.state.password === "") {
             this.setState({
                 passwordError: "Password cannot be empty!"
             })
         }
-        if (inputLogin !== "" && inputPassword !== "") {
+        if (this.state.login !== "" && this.state.password !== "") {
             validation = true;
         }
         if (validation) {
@@ -41,8 +45,8 @@ export class Login extends Component {
                 logginingError: ""
             })
             axios.post("/users/login", {
-                login: inputLogin,
-                password: inputPassword
+                login: this.state.login,
+                password: this.state.password
             }).then(response => {
                 if (!response.data.done) {
                     this.setState({
@@ -56,7 +60,7 @@ export class Login extends Component {
                     sessionStorage.setItem('jwt', response.data.token);
                     setTimeout(() => {
                         this.props.history.push("/account");
-                    }, 3000);
+                    }, 1000);
                 }
             });
         }
@@ -64,12 +68,12 @@ export class Login extends Component {
     render() {
         return (
             <div className="login flexfullwh">
-                <form className="login-form center">
-                    <input id="login" name="login" placeholder="Type your login" type="text" /> <br />
+                <form className="login-form center" onSubmit={this.handleSubmit}>
+                    <input id="login" name="login" placeholder="Type your login" type="text" onChange={this.handleChange} /> <br />
                     <div className="error">{this.state.loginError}</div>
-                    <input id="password" name="password" placeholder="Type your password" type="password" /> <br />
+                    <input id="password" name="password" placeholder="Type your password" type="password" onChange={this.handleChange} /> <br />
                     <div className="error">{this.state.passwordError}</div>
-                    <button type="submit" onClick={this.handleSubmit}>Log in</button> <br />
+                    <button type="submit">Log in</button> <br />
                     <div className="error">{this.state.logginingError}</div>
                     <div className="success">{this.state.logginingSuccess}</div>
                     <a href="/register">Do not have account? Register it!</a>
