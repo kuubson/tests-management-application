@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { getJwt } from '../helpers/jwt'
+import { withRouter } from 'react-router-dom'
 
 export class Login extends Component {
     componentDidMount() {
@@ -8,6 +9,12 @@ export class Login extends Component {
         if (jwt) {
             this.props.history.push('/account');
         }
+        this.props.socket.on('warning', msg => {
+            this.setState({
+                logginingSuccess: "",
+                logginingError: msg
+            })
+        })
     }
     state = {
         login: "",
@@ -83,4 +90,4 @@ export class Login extends Component {
     }
 }
 
-export default Login
+export default withRouter(Login)

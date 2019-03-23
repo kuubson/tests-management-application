@@ -65,9 +65,11 @@ router.post('/login', (req, res) => {
                     const payload = { login }
                     const token = jwt.sign(payload, process.env.SECRET_OR_KEY);
                     res.send({
+                        login: user.login,
+                        role: user.role,
+                        token: token,
                         done: true,
-                        msg: 'Logged in',
-                        token: token
+                        msg: 'Logged in'
                     });
                 } else {
                     res.send({

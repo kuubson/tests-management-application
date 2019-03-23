@@ -21,13 +21,14 @@ export class Account extends Component {
     }
     render() {
         if (this.state.role === "teacher") {
+            this.props.socket.emit('teacherLogged', this.state.login);
             return (
-                <Teacher />
+                <Teacher login={this.state.login} role={this.state.role} socket={this.props.socket} />
             )
         }
         if (this.state.role === "student") {
             return (
-                <Student />
+                <Student login={this.state.login} role={this.state.role} socket={this.props.socket} />
             )
         } else {
             return (

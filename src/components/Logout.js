@@ -4,13 +4,13 @@ import { withRouter } from 'react-router-dom'
 export class Logout extends Component {
     handleClick = (e) => {
         sessionStorage.removeItem('jwt');
+        sessionStorage.removeItem('role');
+        this.props.socket.emit('logout');
         this.props.history.push('/login');
     }
     render() {
         return (
-            <div className="logout">
-                <button onClick={this.handleClick}>Logout</button>
-            </div>
+            <button className="logout" onClick={this.handleClick}>Logout</button>
         )
     }
 }

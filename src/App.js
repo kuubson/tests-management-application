@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import Login from './components/Login'
 import Register from './components/Register';
 import Account from './components/Account';
+const socket = require('socket.io-client')('127.0.0.1:3001')
 
 class App extends Component {
   render() {
@@ -13,10 +14,10 @@ class App extends Component {
         <div className="tests-management-application">
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} />
+            <Route path="/login" render={() => <Login socket={socket} />} />
             <Route path="/register" component={Register} />
             <ProtectedRoute>
-              <Route path="/account" component={Account} />
+              <Route path="/account" render={() => <Account socket={socket} />} />
             </ProtectedRoute>
           </Switch>
         </div>
