@@ -103,7 +103,7 @@ export class Register extends Component {
                     })
                     setTimeout(() => {
                         this.props.history.push("/login");
-                    }, 3500);
+                    }, 1000);
                 }
             });
         }

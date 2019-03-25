@@ -7,6 +7,16 @@ import { clearString } from '../helpers/clearString'
 
 export class Teacher extends Component {
     componentDidMount() {
+        this.props.socket.emit('login', {
+            login: this.props.login,
+            role: this.props.role
+        });
+        this.props.socket.on('loginStatus', (isLogged) => {
+            if (isLogged) {
+                $('.logout').click();
+                this.props.socket.emit('sendWarning', "You are already logged in another tab!");
+            }
+        })
         this.props.socket.emit('studentsOnline');
         this.props.socket.on('receiveTestResult', (student, result) => {
             alert(`Student ${student} ended his test! He gained ${result} points`)
@@ -14,7 +24,7 @@ export class Teacher extends Component {
         this.props.socket.on('studentsList', (studentsList) => {
             const list = studentsList.map(student => {
                 return (
-                    <li className="student" key={student.id} onClick={() => this.handleSend(student.id)}>{student.login}</li>
+                    <li className="student" key={student.id} onClick={() => this.handleSend(student.id)} onDoubleClick={() => this.handleBlindSend(student.id)}>{student.login}</li>
                 )
             })
             this.setState({
@@ -85,6 +95,10 @@ export class Teacher extends Component {
     handleSend = (id) => {
         this.props.socket.emit('sendMessage', id, this.state.questionsArray);
     }
+    handleBlindSend = (id) => {
+        this.props.socket.emit('sendMessageBLIND', id, this.state.questionsArray);
+    }
+    receiveMessageBLIND
     handleSubmit = (e) => {
         e.preventDefault();
         if (this.state.numberOfQuestions !== "" && this.state.numberOfQuestions > 0) {

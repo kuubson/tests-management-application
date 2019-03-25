@@ -3,6 +3,7 @@ import axios from 'axios'
 import { getJwt } from '../helpers/jwt'
 import { Teacher } from './Teacher';
 import Student from './Student';
+import BlindStudent from './BlindStudent'
 
 export class Account extends Component {
     state = {
@@ -30,7 +31,14 @@ export class Account extends Component {
             return (
                 <Student login={this.state.login} role={this.state.role} socket={this.props.socket} />
             )
-        } else {
+        }
+        if (this.state.role === "blind-student") {
+            return (
+                <BlindStudent login={this.state.login} role={this.state.role} socket={this.props.socket} />
+            )
+        }
+
+        else {
             return (
                 <div>
                     Loading...

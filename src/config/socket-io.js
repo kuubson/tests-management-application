@@ -9,7 +9,7 @@ module.exports = function (io) {
             socket.userLogin = data.login;
             socket.userRole = data.role;
 
-            if (socket.userRole == 'student') {
+            if (socket.userRole == 'student' || socket.userRole == 'blind-student') {
                 const index = studentsList.findIndex(user => user.login === socket.userLogin);
                 if (index == -1) {
                     studentsList.push({
@@ -50,6 +50,10 @@ module.exports = function (io) {
             io.to(userId).emit('receiveMessage', test);
         })
 
+        socket.on('sendMessageBLIND', (userId, test) => {
+            io.to(userId).emit('receiveMessageBLIND', test);
+        })
+
         socket.on('sendTestResults', (student, result) => {
             io.emit('receiveTestResult', student, result);
         })
@@ -82,6 +86,8 @@ module.exports = function (io) {
                 teachersList.splice(teachersList.indexOf(socket.userLogin), 1);
                 io.emit('teachersList', teachersList);
             }
+            console.log(studentsList);
+            console.log(teachersList);
         });
 
     });
