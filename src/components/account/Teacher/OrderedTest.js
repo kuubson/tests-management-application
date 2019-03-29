@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Logout from '../Buttons/Logout';
 import Cancel from '../Buttons/Cancel';
-import AddQuestion from '../Buttons/AddQuestion'
+import Add from '../Buttons/Add'
 import Print from '../Buttons/Print'
 import $ from 'jquery'
 
@@ -70,7 +70,7 @@ export class OrderedTest extends Component {
                         <div className="buttons">
                             <li><Logout /></li>
                             <li><Cancel cancel={this.props.cancel} /></li>
-                            <li><AddQuestion /></li>
+                            <li><Add /></li>
                             <li><Print questions={this.state.questions} /></li>
                         </div>
                         <div className="students">

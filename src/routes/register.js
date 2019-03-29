@@ -31,7 +31,7 @@ router.post('/register', (req, res) => {
                 } else {
                     res.send({
                         done: false,
-                        message: 'Cannot create teacher account, bad user key!'
+                        message: 'Cannot create teacher account, invalid secret teacher key!'
                     });
                 }
             } else {

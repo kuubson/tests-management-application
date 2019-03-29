@@ -28,6 +28,8 @@ export class Teacher extends Component {
     }
     cancel = () => {
         this.setState({
+            amount: "",
+            category: "",
             questions: ""
         })
     }

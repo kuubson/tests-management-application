@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Logout from '../Buttons/Logout'
-import AddQuestion from '../Buttons/AddQuestion';
+import Add from '../Buttons/Add';
 
 export class TeacherForm extends Component {
     render() {
@@ -10,7 +10,7 @@ export class TeacherForm extends Component {
                     <ul className="menu-items">
                         <div className="buttons">
                             <li><Logout /></li>
-                            <li><AddQuestion /></li>
+                            <li><Add /></li>
                         </div>
                     </ul>
                 </div>
@@ -20,11 +20,11 @@ export class TeacherForm extends Component {
                         {this.props.errorAMOUNT && <div className="alert alert-danger">{this.props.errorAMOUNT}</div>}
                         <select className="form-control" onChange={this.props.handleSelectChange}>
                             <option hidden>Choose category...</option>
-                            <option name="category" value="EE08">EE08</option>
-                            <option name="category" value="EE09">EE09</option>
-                            <option name="category" value="EE12">EE12</option>
-                            <option name="category" value="EE13">EE13</option>
                             <option name="category" value="EE14">EE14</option>
+                            <option name="category" value="EE13">EE13</option>
+                            <option name="category" value="EE12">EE12</option>
+                            <option name="category" value="EE09">EE09</option>
+                            <option name="category" value="EE08">EE08</option>
                         </select> <br />
                         {this.props.errorCATEGORY && <div className="alert alert-danger">{this.props.errorCATEGORY}</div>}
                         {this.props.error && <div className="alert alert-warning">{this.props.error}</div>}

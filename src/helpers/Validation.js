@@ -19,6 +19,18 @@ var teacherState = {
     errorCATEGORY: ""
 }
 
+var questionState = {
+    isValid: "",
+    errorBODY: "",
+    errorANSWER_A: "",
+    errorANSWER_B: "",
+    errorANSWER_C: "",
+    errorANSWER_D: "",
+    errorANSWER_PROPER: "",
+    errorCATEGORY: "",
+    errorIMAGEURL: "",
+}
+
 class Validation {
 
     static registerFormValidation = (login, password, password2, type, userKey) => {
@@ -43,8 +55,21 @@ class Validation {
     static teacherFormValidation = (amount, category) => {
         amount === "" ? teacherState.errorAMOUNT = "This field cannot be empty!" : teacherState.errorAMOUNT = "";
         category === "" ? teacherState.errorCATEGORY = "You must choose category!" : teacherState.errorCATEGORY = "";
-        amount !== "" && category !== "" ? teacherState.isValid = true : loginState.isValid = false
+        amount !== "" && category !== "" ? teacherState.isValid = true : teacherState.isValid = false
         return teacherState;
+    }
+
+    static newQuestionValidation = (body, answerA, answerB, answerC, answerD, properAnswer, category, imageUrl) => {
+        body === "" ? questionState.errorBODY = "Question cannot be empty!" : questionState.errorBODY = "";
+        answerA === "" ? questionState.errorANSWER_A = "This answer cannot be empty!" : questionState.errorANSWER_A = "";
+        answerB === "" ? questionState.errorANSWER_B = "This answer cannot be empty!" : questionState.errorANSWER_B = "";
+        answerC === "" ? questionState.errorANSWER_C = "This answer cannot be empty!" : questionState.errorANSWER_C = "";
+        answerD === "" ? questionState.errorANSWER_D = "This answer cannot be empty!" : questionState.errorANSWER_D = "";
+        properAnswer === "" ? questionState.errorANSWER_PROPER = "Question must have its answer!" : questionState.errorANSWER_PROPER = "";
+        category === "" ? questionState.errorCATEGORY = "Choose category!" : questionState.errorCATEGORY = "";
+        imageUrl === "" ? questionState.errorIMAGEURL = "" : !imageUrl.startsWith("img/") ? questionState.errorIMAGEURL = "Image url have to starts with img/ (example: img/question1.png)" : imageUrl.startsWith("img/") && imageUrl.length < 8 ? questionState.errorIMAGEURL = "Type proper image url!" : questionState.errorIMAGEURL = "";
+        body !== "" && answerA !== "" && answerB !== "" && answerC !== "" && answerD !== "" && properAnswer !== "" && category !== "" && (imageUrl !== "" && imageUrl.startsWith('img/') && imageUrl.length > 8) && imageUrl === "" ? questionState.isValid = true : questionState.isValid = false
+        return questionState
     }
 
 }

@@ -21,6 +21,7 @@ app.use('/', require('./routes/register'));
 app.use('/', require('./routes/login'));
 app.use('/', require('./routes/getUser'));
 app.use('/', require('./routes/getTest'));
+app.use('/', require('./routes/saveQuestion'));
 
 http.listen(port, () => console.log(`Server started at port ${port}`));
 
