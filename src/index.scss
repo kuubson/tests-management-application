@@ -1,0 +1,102 @@
+#root,
+.tests-management-application,
+html,
+body {
+    width: 100%;
+    height: 100vh;
+}
+
+//MOST USED 2 CLASSES
+
+.flexfullwh {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    text-align: center;
+
+    .btn {
+        margin-bottom: 12px;
+    }
+}
+
+.center {
+    width: 500px;
+    margin: auto;
+}
+
+//MOST USED 2 CLASSES
+
+.menu {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 25% 1fr;
+
+    .menu-list {
+        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        display: flex;
+        justify-content: center;
+
+        .menu-items {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            position: fixed;
+            top: 0;
+
+            .buttons,
+            .students {
+                margin-top: 30px;
+            }
+
+        }
+    }
+}
+
+.questions {
+    .question {
+        box-shadow: 0px 0px 15px black;
+        padding: 15px;
+        margin: 30px 0px;
+
+        img {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .answer:last-child {
+            margin-bottom: 0px;
+        }
+    }
+}
+
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+
+    .wave {
+        width: 2px;
+        height: 100px;
+        background: green;
+        margin: 5px;
+        animation: loadingAnimation 1s infinite;
+    }
+
+    @keyframes loadingAnimation {
+        0% {
+            height: 0px;
+        }
+
+        50% {
+            height: 30px;
+        }
+
+        100% {
+            height: 0px;
+        }
+    }
+
+}
