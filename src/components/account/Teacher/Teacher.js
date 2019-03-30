@@ -41,7 +41,7 @@ export class Teacher extends Component {
         if (validation.isValid) {
             const gettingTestProcess = await axios.post('/getTest', {
                 amount,
-                category,
+                category
             })
             gettingTestProcess.data.done ? this.setState({ "questions": gettingTestProcess.data.questions, "error": "", success: "" }) : this.setState({ "error": gettingTestProcess.data.message, "success": "", "questions": "" });
         }

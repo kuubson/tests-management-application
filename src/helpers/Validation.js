@@ -20,7 +20,7 @@ var teacherState = {
 }
 
 var questionState = {
-    isValid: "",
+    isValid: false,
     errorBODY: "",
     errorANSWER_A: "",
     errorANSWER_B: "",
@@ -67,8 +67,8 @@ class Validation {
         answerD === "" ? questionState.errorANSWER_D = "This answer cannot be empty!" : questionState.errorANSWER_D = "";
         properAnswer === "" ? questionState.errorANSWER_PROPER = "Question must have its answer!" : questionState.errorANSWER_PROPER = "";
         category === "" ? questionState.errorCATEGORY = "Choose category!" : questionState.errorCATEGORY = "";
-        imageUrl === "" ? questionState.errorIMAGEURL = "" : !imageUrl.startsWith("img/") ? questionState.errorIMAGEURL = "Image url have to starts with img/ (example: img/question1.png)" : imageUrl.startsWith("img/") && imageUrl.length < 8 ? questionState.errorIMAGEURL = "Type proper image url!" : questionState.errorIMAGEURL = "";
-        body !== "" && answerA !== "" && answerB !== "" && answerC !== "" && answerD !== "" && properAnswer !== "" && category !== "" && (imageUrl !== "" && imageUrl.startsWith('img/') && imageUrl.length > 8) && imageUrl === "" ? questionState.isValid = true : questionState.isValid = false
+        imageUrl === "" ? questionState.errorIMAGEURL = "" : !imageUrl.startsWith("img/") ? questionState.errorIMAGEURL = "Image url have to starts with img/ (example: img/question1.png)" : imageUrl.startsWith("img/") && imageUrl.length < 8 ? questionState.errorIMAGEURL = "Type proper image url!" : imageUrl.startsWith("img/") && imageUrl.length > 8 && (imageUrl.endsWith('.jpg') || imageUrl.endsWith('.png')) ? questionState.errorIMAGEURL = "" : questionState.errorIMAGEURL = "Type proper image url!";
+        body !== "" && answerA !== "" && answerB !== "" && answerC !== "" && answerD !== "" && properAnswer !== "" && category !== "" && ((imageUrl !== "" && imageUrl.startsWith('img/') && imageUrl.length > 8 && (imageUrl.endsWith('.jpg') || imageUrl.endsWith('.png'))) || imageUrl === "") ? questionState.isValid = true : questionState.isValid = false
         return questionState
     }
 

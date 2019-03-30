@@ -55,6 +55,7 @@ export class AddQuestion extends Component {
         const { body, answerA, answerB, answerC, answerD, properAnswer, category, imageUrl } = this.state
         const validation = Validation.newQuestionValidation(body, answerA, answerB, answerC, answerD, properAnswer, category, imageUrl)
         this.setState(validation);
+        console.log(validation);
         if (validation.isValid) {
             const savingTestProcess = await axios.post('/saveQuestion', {
                 body,
@@ -68,6 +69,24 @@ export class AddQuestion extends Component {
             })
             savingTestProcess.data.done ? this.setState({ success: savingTestProcess.data.message, "error": "" }) : this.setState({ "error": savingTestProcess.data.message, "success": "" });
         }
+        this.setState({
+            body: "",
+            answerA: "",
+            answerB: "",
+            answerC: "",
+            answerD: "",
+            properAnswer: "",
+            category: "",
+            imageUrl: "",
+            errorBODY: "",
+            errorANSWER_A: "",
+            errorANSWER_B: "",
+            errorANSWER_C: "",
+            errorANSWER_D: "",
+            errorANSWER_PROPER: "",
+            errorCATEGORY: "",
+            errorIMAGEURL: "",
+        })
     }
     render() {
         return (

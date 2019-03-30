@@ -6,32 +6,30 @@ router.post('/getTest', (req, res) => {
     const { amount, category } = req.body;
     const parsedAmount = parseInt(amount);
 
-    Question.countDocuments((error, count) => {
+    Question.find({
+        category
+    }, null, { limit: parsedAmount }, (error, questions) => {
         if (error) {
             res.send(error);
         }
-        if (parsedAmount > count) {
+        if (questions.length == 0) {
             res.send({
                 done: false,
-                message: `There are only ${count} questions in database!`
-            })
+                message: 'There is a lack of questions of this category in the database!'
+            });
+        }
+        else if (parsedAmount > questions.length) {
+            res.send({
+                done: false,
+                message: `There are ${questions.length} questions this category in the database!`
+            });
         } else {
-            Question.aggregate([{ $sample: { size: parsedAmount } }, { $match: { category: category } }]).then(questions => {
-                if (questions.length == 0) {
-                    res.send({
-                        done: false,
-                        message: 'There is a lack of questions of this category in the database!'
-                    });
-                } else {
-                    res.send({
-                        done: true,
-                        questions: questions
-                    });
-                }
-            })
+            res.send({
+                done: true,
+                questions: questions
+            });
         }
     });
-
 });
 
 module.exports = router;
