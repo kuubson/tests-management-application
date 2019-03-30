@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 
+import BlindStudentHome from './BlindStudentHome'
+
 export class BlindStudent extends Component {
     render() {
         return (
-            <div>
-                BlindStudent
+            <div className="blindstudent flexfullwh">
+                <BlindStudentHome />
             </div>
         )
     }
