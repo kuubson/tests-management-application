@@ -65,7 +65,9 @@ export class AddQuestion extends Component {
                 category,
                 imageUrl
             })
-            savingTestProcess.data.done ? this.setState({ success: savingTestProcess.data.message, "error": "" }) : this.setState({ "error": savingTestProcess.data.message, "success": "" });
+            savingTestProcess.data.done ? this.setState({ success: savingTestProcess.data.message, "error": "" }) || setTimeout(() => {
+                this.props.history.push('/account')
+            }, 2500) : this.setState({ "error": savingTestProcess.data.message, "success": "" });
         }
     }
     render() {

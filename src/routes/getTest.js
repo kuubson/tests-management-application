@@ -21,7 +21,7 @@ router.post('/getTest', (req, res) => {
         else if (parsedAmount > questions.length) {
             res.send({
                 done: false,
-                message: `There are ${questions.length} questions this category in the database!`
+                message: `There are ${questions.length} question/s of this category in the database!`
             });
         } else {
             res.send({

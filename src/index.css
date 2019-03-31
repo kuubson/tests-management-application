@@ -96,8 +96,8 @@ body {
   padding: 20px;
   height: 40px;
   margin: 25px;
-  background: -webkit-gradient(linear, right top, left top, from(#f09419), color-stop(25%, #e6683c), color-stop(50%, #dc2743), color-stop(75%, #cc2366), to(#bc1888));
-  background: linear-gradient(270deg, #f09419 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  background: -webkit-gradient(linear, left top, left bottom, from(0%), color-stop(25%, #e6683c), color-stop(50%, #dc2743), color-stop(75%, #cc2366), to(#bc1888));
+  background: linear-gradient(0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -107,11 +107,11 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  border-radius: 30px;
+  border-radius: 10px;
   white-space: nowrap;
   color: white;
-  -webkit-box-shadow: 0px 0px 10px black;
-          box-shadow: 0px 0px 10px black;
+  -webkit-box-shadow: 0px 0px 3px black;
+          box-shadow: 0px 0px 3px black;
 }
 
 .questions .question {

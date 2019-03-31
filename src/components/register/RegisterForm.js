@@ -15,6 +15,7 @@ const RegisterForm = (props) => {
                     <option hidden>Choose account type...</option>
                     <option name="type" value="student">Student</option>
                     <option name="type" value="blind-student">Blind-Student</option>
+                    <option name="type" value="blind-student">Sand-Blind-Student</option>
                     <option name="type" value="teacher">Teacher</option>
                 </select> <br />
                 {props.errorTYPE && <div className="alert alert-danger">{props.errorTYPE}</div>}

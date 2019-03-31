@@ -40,8 +40,8 @@ class Validation {
         password.length < 5 ? registerState.errorPASSWORD = "Password should be at least 5 characters long!" : registerState.errorPASSWORD = "";
         password2 !== password ? registerState.errorPASSWORD2 = "Passwords don't match!" : registerState.errorPASSWORD2 = "";
         type === "" ? registerState.errorTYPE = "Choose account type!" : registerState.errorTYPE = "";
-        userKey === "" ? registerState.errorUSERKEY = "User key cannot be empty!" : registerState.errorUSERKEY = "";
-        login !== "" && login.length >= 5 && password !== "" && password.length >= 5 && password2 === password && type !== "" && userKey !== "" ? registerState.isValid = true : registerState.isValid = false
+        userKey === "" ? registerState.errorUSERKEY = "" : userKey.length < 7 ? registerState.errorUSERKEY = "Give proper teacher authorization key!" : registerState.errorUSERKEY = "";
+        registerState.errorLOGIN === "" && registerState.errorPASSWORD === "" && registerState.errorPASSWORD2 === "" && registerState.errorTYPE === "" && registerState.errorUSERKEY === "" ? registerState.isValid = true : registerState.isValid = false
         return registerState;
     }
 
@@ -53,9 +53,9 @@ class Validation {
     }
 
     static teacherFormValidation = (amount, category) => {
-        amount === "" ? teacherState.errorAMOUNT = "This field cannot be empty!" : teacherState.errorAMOUNT = "";
+        amount === "" ? teacherState.errorAMOUNT = "This field cannot be empty!" : isNaN(amount) ? teacherState.errorAMOUNT = "You cannot give letters here!" : teacherState.errorAMOUNT = "";
         category === "" ? teacherState.errorCATEGORY = "You must choose category!" : teacherState.errorCATEGORY = "";
-        amount !== "" && category !== "" ? teacherState.isValid = true : teacherState.isValid = false
+        teacherState.errorAMOUNT === "" && teacherState.errorCATEGORY === "" ? teacherState.isValid = true : teacherState.isValid = false
         return teacherState;
     }
 

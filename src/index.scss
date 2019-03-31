@@ -100,14 +100,14 @@ body {
     padding: 20px;
     height: 40px;
     margin: 25px;
-    background: linear-gradient(270deg, #f09419 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    background: linear-gradient(0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 30px;
+    border-radius: 10px;
     white-space: nowrap;
     color: white;
-    box-shadow: 0px 0px 10px black;
+    box-shadow: 0px 0px 3px black;
 }
 
 .questions {
