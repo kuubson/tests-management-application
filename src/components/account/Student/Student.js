@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import StudentHome from './StudentHome'
 import io from 'socket.io-client'
+import StudentHome from './StudentHome';
 
 export class Student extends Component {
     state = {
-        socket: ""
+        socket: "",
     }
     componentWillMount() {
         const socket = io('http://localhost:3001/student');
@@ -14,9 +14,6 @@ export class Student extends Component {
         this.state.socket.emit('login', {
             login: this.props.login,
             type: this.props.type
-        })
-        this.state.socket.on('sendTest', (test) => {
-            console.log(test);
         })
     }
     componentWillUnmount() {
@@ -28,7 +25,7 @@ export class Student extends Component {
     render() {
         return (
             <div className="student flexfullwh">
-                <StudentHome />
+                <StudentHome socket={this.state.socket} />
             </div>
         )
     }

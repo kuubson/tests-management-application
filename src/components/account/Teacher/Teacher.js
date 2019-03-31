@@ -51,8 +51,8 @@ export class Teacher extends Component {
             type: this.props.type
         })
     }
-    sendTest = (login, test) => {
-        this.state.socket.emit('sendTest', login, test);
+    sendTest = (login, questions) => {
+        this.state.socket.emit('sendTest', login, questions);
     }
     handleChange = (e) => {
         this.setState({
@@ -69,6 +69,11 @@ export class Teacher extends Component {
             amount: "",
             category: "",
             questions: ""
+        })
+    }
+    update = (questions) => {
+        this.setState({
+            questions
         })
     }
     handleSubmit = async (e) => {

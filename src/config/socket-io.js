@@ -32,15 +32,15 @@ module.exports = (io) => {
             io.of('/teacher').emit('studentsList', students, blindStudents);
         })
 
-        socket.on('sendTest', (login, test) => {
+        socket.on('sendTest', (login, questions) => {
             const allStudents = students.concat(blindStudents);
             allStudents.forEach(student => {
                 if (student.login == login) {
                     if (student.type == 'student') {
-                        io.of('/student').to(student.id).emit('sendTest', test);
+                        io.of('/student').to(student.id).emit('sendTest', questions);
                     }
                     if (student.type == 'blind-student') {
-                        io.of('/blindStudent').to(student.id).emit('sendTest', test);
+                        io.of('/blindStudent').to(student.id).emit('sendTest', questions);
                     }
                 }
             })

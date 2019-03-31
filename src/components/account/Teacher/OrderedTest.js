@@ -61,6 +61,7 @@ export class OrderedTest extends Component {
             questions: updatedQuestions,
             orderedTest: orderedTest
         });
+        this.props.update(updatedQuestions);
     }
     render() {
         return (
