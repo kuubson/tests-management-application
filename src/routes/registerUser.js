@@ -10,7 +10,7 @@ router.post('/register', (req, res) => {
         if (user) {
             res.send({
                 done: false,
-                message: 'This login is already taken'
+                message: 'This login is already taken!'
             });
         } else {
             if (type === 'teacher') {

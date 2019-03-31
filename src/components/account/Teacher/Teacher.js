@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-
 import Validation from '../../../helpers/Validation'
-
 import TeacherForm from './TeacherForm'
 import OrderedTest from './OrderedTest';
+import io from 'socket.io-client'
 
 export class Teacher extends Component {
     state = {
+        socket: "",
+        studentsList: "",
         amount: "",
         category: "",
         questions: "",
@@ -15,6 +16,43 @@ export class Teacher extends Component {
         errorCATEGORY: "",
         error: "",
         success: ""
+    }
+    componentWillMount() {
+        const socket = io('http://localhost:3001/teacher');
+        this.setState({ socket });
+    }
+    componentDidMount() {
+        this.state.socket.emit('login', {
+            login: this.props.login,
+            type: this.props.type
+        })
+        this.state.socket.emit('studentsList');
+        this.state.socket.on('studentsList', (students, blindStudents) => {
+            let studentsList = students.concat(blindStudents);
+            function getUnique(arr, comp) {
+                const unique = arr
+                    .map(e => e[comp])
+                    .map((e, i, final) => final.indexOf(e) === i && i)
+                    .filter(e => arr[e]).map(e => arr[e]);
+                return unique;
+            }
+            studentsList = getUnique(studentsList, 'login').map(student => {
+                console.log(student);
+                return (
+                    <li className="student" key={student.id} onClick={() => this.sendTest(student.login, this.state.questions)}>{student.login}</li>
+                )
+            });
+            this.setState({ studentsList });
+        })
+    }
+    componentWillUnmount() {
+        this.state.socket.emit('logout', {
+            login: this.props.login,
+            type: this.props.type
+        })
+    }
+    sendTest = (login, test) => {
+        this.state.socket.emit('sendTest', login, test);
     }
     handleChange = (e) => {
         this.setState({
@@ -57,7 +95,7 @@ export class Teacher extends Component {
                     errorCATEGORY={this.state.errorCATEGORY}
                     error={this.state.error}
                     success={this.state.success}
-                /> : <OrderedTest questions={this.state.questions} cancel={this.cancel} update={this.update} />}
+                /> : <OrderedTest questions={this.state.questions} studentsList={this.state.studentsList} sendTest={this.sendTest} cancel={this.cancel} update={this.update} />}
             </div>
         )
     }

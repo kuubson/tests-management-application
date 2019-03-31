@@ -6,7 +6,6 @@ const app = express();
 const http = require('http').createServer(app);
 const port = process.env.PORT || 3001;
 
-
 const io = require('socket.io')(http);
 require('./config/socket-io')(io);
 

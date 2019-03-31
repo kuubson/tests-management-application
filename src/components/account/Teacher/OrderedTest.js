@@ -74,10 +74,7 @@ export class OrderedTest extends Component {
                             <li><Print questions={this.state.questions} /></li>
                         </div>
                         <div className="students">
-                            <li>Student 1</li>
-                            <li>Student 2</li>
-                            <li>Student 3</li>
-                            <li>Student 4</li>
+                            {this.props.studentsList}
                         </div>
                     </ul>
                 </div>

@@ -28,7 +28,7 @@ export class Account extends Component {
     render() {
         return (
             <div className="account">
-                {this.state.type === 'teacher' ? <Teacher /> : this.state.type === 'student' ? <Student /> : this.state.type === 'blind-student' ? <BlindStudent /> : <Loading />}
+                {this.state.type === 'teacher' ? <Teacher login={this.state.login} type={this.state.type} /> : this.state.type === 'student' ? <Student login={this.state.login} type={this.state.type} /> : this.state.type === 'blind-student' ? <BlindStudent login={this.state.login} type={this.state.type} /> : <Loading />}
             </div>
         )
     }

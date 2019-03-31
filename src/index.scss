@@ -49,6 +49,20 @@ body {
                 margin-top: 30px;
             }
 
+            .students {
+                text-align: center;
+                border-radius: 20px;
+
+                .student {
+                    padding: 10px 20px;
+                    color: rgba(0, 250, 92, 0.707);
+                    font-weight: bold;
+                    cursor: pointer;
+                    margin: 5px 0;
+                    text-transform: uppercase;
+                }
+            }
+
         }
     }
 }
@@ -69,6 +83,7 @@ body {
             margin-bottom: 0px;
         }
     }
+
 }
 
 .loading {
