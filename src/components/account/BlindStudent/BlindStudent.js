@@ -15,9 +15,6 @@ export class BlindStudent extends Component {
             login: this.props.login,
             type: this.props.type
         })
-        this.state.socket.on('sendTest', (test) => {
-            console.log(test);
-        })
     }
     componentWillUnmount() {
         this.state.socket.emit('logout', {
@@ -28,7 +25,7 @@ export class BlindStudent extends Component {
     render() {
         return (
             <div className="blindstudent flexfullwh">
-                <BlindStudentHome />
+                <BlindStudentHome socket={this.state.socket} login={this.props.login} />
             </div>
         )
     }

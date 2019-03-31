@@ -25,7 +25,7 @@ export class Student extends Component {
     render() {
         return (
             <div className="student flexfullwh">
-                <StudentHome socket={this.state.socket} />
+                <StudentHome socket={this.state.socket} login={this.props.login} />
             </div>
         )
     }

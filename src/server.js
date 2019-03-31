@@ -23,6 +23,10 @@ app.use('/', require('./routes/loginUser'));
 app.use('/', require('./routes/getUser'));
 app.use('/', require('./routes/getTest'));
 app.use('/', require('./routes/saveQuestion'));
+app.use('/', require('./routes/saveResult'));
+app.use('/', require('./routes/getResult'));
+app.use('/', require('./routes/getNewestResult'));
+
 
 http.listen(port, () => console.log(`Server started at port ${port}`));
 

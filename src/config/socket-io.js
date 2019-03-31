@@ -83,6 +83,10 @@ module.exports = (io) => {
             io.of('/teacher').emit('studentsList', students, blindStudents);
         })
 
+        socket.on('sendResult', (data) => {
+            io.of('/teacher').emit('sendResult', data);
+        })
+
         socket.on('disconnect', () => {
             students.splice(students.indexOf({
                 id: socket.id,
@@ -119,6 +123,10 @@ module.exports = (io) => {
             }), 1);
             console.log(blindStudents);
             io.of('/teacher').emit('studentsList', students, blindStudents);
+        })
+
+        socket.on('sendResult', (data) => {
+            io.of('/teacher').emit('sendResult', data);
         })
 
         socket.on('disconnect', () => {

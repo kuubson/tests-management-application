@@ -9,6 +9,9 @@ export class TeacherForm extends Component {
                 <div className="menu-list">
                     <ul className="menu-items">
                         <div className="buttons">
+                            <div className="welcome">
+                                Welcome {this.props.login}
+                            </div>
                             <li><Logout /></li>
                             <li><Add /></li>
                         </div>

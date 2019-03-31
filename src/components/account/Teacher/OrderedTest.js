@@ -4,14 +4,45 @@ import Cancel from '../Buttons/Cancel';
 import Add from '../Buttons/Add'
 import Print from '../Buttons/Print'
 import $ from 'jquery'
+import axios from 'axios'
+const uuidv4 = require('uuid/v4');
 
 export class OrderedTest extends Component {
     state = {
         questions: this.props.questions,
-        orderedTest: ""
+        orderedTest: "",
+        results: ""
     }
+    _isMounted = false;
     componentWillMount() {
         this.organizeQuestions(this.state.questions);
+    }
+    componentDidMount() {
+        this._isMounted = true;
+        this.props.socket.on('sendResult', async (data) => {
+            const gettingNewestResultProcess = await axios.post('/getNewestResult', {
+                login: data.login
+            });
+            if (gettingNewestResultProcess) {
+                this.props.setResults(gettingNewestResultProcess.data);
+                const results = this.props.results.map(result => {
+                    return (
+                        <div className="result" key={uuidv4()}>
+                            <p><b>Student:</b> {result.login}</p>
+                            <p><b>Category:</b> {result.category}</p>
+                            <p><b>Points:</b> {result.points}/{result.totalPoints} {result.percent}</p>
+                            <p><b>Date:</b> {result.date}</p>
+                        </div>
+                    )
+                })
+                if (this._isMounted) {
+                    this.setState({ results })
+                }
+            }
+        })
+    }
+    componentWillUnmount() {
+        this._isMounted = false;
     }
     organizeQuestions = (questions) => {
         let counter = 0;
@@ -54,7 +85,7 @@ export class OrderedTest extends Component {
                 </div>
             )
         })
-        if (this.state.questions.length - 1 === 0) {
+        if (this.state.questions.length === 2) {
             $('.cancel').click();
         }
         this.setState({
@@ -69,13 +100,21 @@ export class OrderedTest extends Component {
                 <div className="menu-list">
                     <ul className="menu-items">
                         <div className="buttons">
+                            <div className="welcome">
+                                Welcome {this.props.login}
+                            </div>
                             <li><Logout /></li>
                             <li><Cancel cancel={this.props.cancel} /></li>
                             <li><Add /></li>
                             <li><Print questions={this.state.questions} /></li>
                         </div>
-                        <div className="students">
-                            {this.props.studentsList}
+                        <div className="info">
+                            {this.props.studentsList !== "" && <div className="students">
+                                {this.props.studentsList}
+                            </div>}
+                            {this.props.results !== "" && <div className="results">
+                                {this.state.results}
+                            </div>}
                         </div>
                     </ul>
                 </div>

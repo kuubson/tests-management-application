@@ -9,6 +9,7 @@ export class Teacher extends Component {
     state = {
         socket: "",
         studentsList: "",
+        results: [],
         amount: "",
         category: "",
         questions: "",
@@ -37,7 +38,6 @@ export class Teacher extends Component {
                 return unique;
             }
             studentsList = getUnique(studentsList, 'login').map(student => {
-                console.log(student);
                 return (
                     <li className="student" key={student.id} onClick={() => this.sendTest(student.login, this.state.questions)}>{student.login}</li>
                 )
@@ -53,6 +53,9 @@ export class Teacher extends Component {
     }
     sendTest = (login, questions) => {
         this.state.socket.emit('sendTest', login, questions);
+    }
+    setResults = (results) => {
+        this.state.results.push(results);
     }
     handleChange = (e) => {
         this.setState({
@@ -100,7 +103,8 @@ export class Teacher extends Component {
                     errorCATEGORY={this.state.errorCATEGORY}
                     error={this.state.error}
                     success={this.state.success}
-                /> : <OrderedTest questions={this.state.questions} studentsList={this.state.studentsList} sendTest={this.sendTest} cancel={this.cancel} update={this.update} />}
+                    login={this.props.login}
+                /> : <OrderedTest socket={this.state.socket} login={this.props.login} setResults={this.setResults} results={this.state.results} questions={this.state.questions} studentsList={this.state.studentsList} sendTest={this.sendTest} cancel={this.cancel} update={this.update} />}
             </div>
         )
     }

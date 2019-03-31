@@ -4,6 +4,7 @@ html,
 body {
     width: 100%;
     height: 100vh;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 //MOST USED 2 CLASSES
@@ -45,21 +46,30 @@ body {
             position: fixed;
             top: 0;
 
-            .buttons,
-            .students {
+            .buttons {
                 margin-top: 30px;
             }
 
+            .results {
+                .result {
+                    padding: 20px;
+                }
+            }
+
+            .info {
+                margin-top: 50px;
+                overflow: auto;
+                height: 400px;
+            }
+
             .students {
-                text-align: center;
-                border-radius: 20px;
+                margin-top: 10px;
 
                 .student {
+
                     padding: 10px 20px;
-                    color: rgba(0, 250, 92, 0.707);
                     font-weight: bold;
                     cursor: pointer;
-                    margin: 5px 0;
                     text-transform: uppercase;
                 }
             }
@@ -68,47 +78,44 @@ body {
     }
 }
 
+.teacher {
+    .questions {
+        .question {
+            cursor: pointer;
+        }
+    }
+}
+
+.alert {
+    min-width: 300px;
+}
+
+.welcome {
+    padding: 20px;
+    height: 40px;
+    margin: 25px;
+    background: linear-gradient(270deg, #f09419 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    white-space: nowrap;
+    color: white;
+    box-shadow: 0px 0px 10px black;
+}
+
 .questions {
     .question {
         box-shadow: 0px 0px 15px black;
         padding: 15px;
         margin: 30px 0px;
-        cursor: pointer;
 
-        .studentAnswer {
-            &:hover {
-                background: lighten(green, 60%);
-            }
-
-            position: relative;
+        input[type=radio]:checked+label .answer {
+            background: lightblue;
         }
 
-        .answerRadio1 {
-            position: absolute;
-            top: 50%;
-            left: 15px;
-            transform: translate(-50%, -50%);
-        }
-
-        .answerRadio2 {
-            position: absolute;
-            top: 50%;
-            left: 15px;
-            transform: translate(-50%, -50%);
-        }
-
-        .answerRadio3 {
-            position: absolute;
-            top: 50%;
-            left: 15px;
-            transform: translate(-50%, -50%);
-        }
-
-        .answerRadio4 {
-            position: absolute;
-            top: 50%;
-            left: 15px;
-            transform: translate(-50%, -50%);
+        input[type=radio] {
+            display: none;
         }
 
         img {
