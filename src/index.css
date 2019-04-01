@@ -49,26 +49,36 @@ body {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  position: fixed;
-  top: 0;
 }
 
 .menu .menu-list .menu-items .buttons {
   margin-top: 30px;
 }
 
+.menu .menu-list .menu-items .results {
+  margin-top: 10px;
+}
+
 .menu .menu-list .menu-items .results .result {
   padding: 20px;
 }
 
-.menu .menu-list .menu-items .info {
-  margin-top: 50px;
-  overflow: auto;
-  height: 400px;
+.menu .menu-list .menu-items .results .result:first-child {
+  border-top: 1px solid white;
+}
+
+.menu .menu-list .menu-items .results .result:last-child {
+  border-bottom: 1px solid white;
+}
+
+.menu .menu-list .menu-items .results .result p,
+.menu .menu-list .menu-items .results .result b {
+  margin: 0;
+  padding: 0;
 }
 
 .menu .menu-list .menu-items .students {
-  margin-top: 10px;
+  margin-bottom: -11px;
 }
 
 .menu .menu-list .menu-items .students .student {
@@ -78,10 +88,30 @@ body {
   text-transform: uppercase;
 }
 
-.blind-student-info {
-  margin-top: 50px;
-  overflow-y: scroll;
-  height: 500px;
+.menu .menu-list .menu-items .students .student:first-child {
+  border-top: 1px solid white;
+}
+
+.menu .menu-list .menu-items .students .student:last-child {
+  border-bottom: 1px solid white;
+}
+
+.foundResult {
+  width: 20vw;
+  margin-bottom: -1px;
+}
+
+.foundResult p,
+.foundResult b {
+  margin: 10px 0px;
+}
+
+.foundResult:first-child {
+  border-top: 1px solid white;
+}
+
+.foundResult:last-child {
+  border-bottom: 1px solid white;
 }
 
 .teacher questions .question {
@@ -90,6 +120,27 @@ body {
 
 .alert {
   min-width: 300px;
+}
+
+.pointResult {
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 5px;
+}
+
+.result-info {
+  margin: auto;
+}
+
+.result-info .findResultsInput {
+  text-indent: 10px;
+  padding: 0;
+  margin: 0;
+  margin-bottom: -7px;
+}
+
+.studentResult .alert {
+  width: 50px;
 }
 
 .welcome {
@@ -142,9 +193,13 @@ body {
   margin-bottom: 0px;
 }
 
+.blind-student-info {
+  margin-top: 20px;
+}
+
 .student-info {
   width: 1px;
-  height: 100px;
+  min-height: 100px;
   font-size: 15px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -158,10 +213,6 @@ body {
   -webkit-transition: 1s;
   transition: 1s;
   font-weight: bold;
-}
-
-.student-info:last-child {
-  margin-bottom: 0;
 }
 
 .student-info:hover {

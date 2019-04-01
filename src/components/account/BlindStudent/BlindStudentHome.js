@@ -45,6 +45,7 @@ export class BlindStudentHome extends Component {
             (`Witaj! Twój nauczyciel wylosował Ci ${test.length} pytania.
                 Aby odsłuchać wiadomość powitalną ponownie naciśnij klawisz R
                 Aby rozpocząść test odsłuchaj pierwsze pytanie klikając spację. 
+                Po zatwierdzeniu każdej udzielonej odpowiedzi otrzymasz informację czy była ona błędna czy poprawna. Kolejne pytanie wywołaj kalwiszem spacja.
                 Aby poruszać się pomiędzy odpowiedziami steruj klawiszami W oraz S. 
                 Aby wybrać odpowiedź klikaj odpowiednio klawisze A, B, C lub D. 
                 Aby zatwierdzić swoją odpowiedź kliknij klawisz ENTER.
@@ -171,7 +172,7 @@ export class BlindStudentHome extends Component {
                         if (this.state.userAnswer === this.state.properAnswer) {
                             speech.cancel();
                             setTimeout(() => {
-                                speech.speak(new SpeechSynthesisUtterance('Poprawna odpowiedź'));
+                                speech.speak(new SpeechSynthesisUtterance('Poprawna odpowiedź. Kliknij spację aby usłyszeć kolejne pytanie'));
                             }, 500);
                             this.setState({
                                 points: this.state.points + 1,
@@ -209,7 +210,7 @@ export class BlindStudentHome extends Component {
                         } else {
                             speech.cancel();
                             setTimeout(() => {
-                                speech.speak(new SpeechSynthesisUtterance('Błędna odpowiedź'));
+                                speech.speak(new SpeechSynthesisUtterance('Błędna odpowiedź. Kliknij spację aby usłyszeć kolejne pytanie'));
                             }, 500);
                             this.setState({
                                 currentQuestion: this.state.currentQuestion + 1
@@ -270,16 +271,18 @@ export class BlindStudentHome extends Component {
                             </div>
                             <li><Logout /></li>
                         </div>
-                        {this.state.body && <div className="blind-student-info">
-                            <div className="alert alert-warning student-info">{`Witaj! Twój nauczyciel wylosował Ci ${this.state.totalPoints} pytania`}</div>
+
+                        <div className="blind-student-info">
+                            {this.state.body && <div className="alert alert-warning student-info">{`Witaj! Twój nauczyciel wylosował Ci ${this.state.totalPoints} pytania`}</div>}
                             <div className="alert alert-warning student-info">Aby odsłuchać wiadomość powitalną ponownie naciśnij klawisz R</div>
                             <div className="alert alert-warning student-info">Aby rozpocząść test odsłuchaj pierwsze pytanie klikając spację.</div>
+                            <div className="alert alert-warning student-info">Po zatwierdzeniu każdej udzielonej odpowiedzi otrzymasz informację czy była ona błędna czy poprawna. Kolejne pytanie wywołaj kalwiszem spacja</div>
                             <div className="alert alert-warning student-info">Aby poruszać się pomiędzy odpowiedziami steruj klawiszami W oraz S. </div>
                             <div className="alert alert-warning student-info">Aby wybrać odpowiedź klikaj odpowiednio klawisze A, B, C lub D.</div>
                             <div className="alert alert-warning student-info">Aby zatwierdzić swoją odpowiedź kliknij klawisz ENTER.</div>
-                            <div className="alert alert-warning student-info">Aby przerwać mój głos użyj klawisza X.</div>
+                            <div className="alert alert-warning student-info">Aby przerwać czytanie użyj klawisza X.</div>
                             <div className="alert alert-warning student-info">Gdy test dobiegnie końca zostaniesz o tym poinformowany!</div>
-                        </div>}
+                        </div>
                     </ul>
                 </div>
                 <div className="questions center">

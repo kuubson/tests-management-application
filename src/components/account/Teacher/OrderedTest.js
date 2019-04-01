@@ -5,6 +5,7 @@ import Add from '../Buttons/Add'
 import Print from '../Buttons/Print'
 import $ from 'jquery'
 import axios from 'axios'
+import FindResults from '../Buttons/FindResults';
 const uuidv4 = require('uuid/v4');
 
 export class OrderedTest extends Component {
@@ -17,6 +18,16 @@ export class OrderedTest extends Component {
     componentDidMount() {
 
         this._isMounted = true;
+
+        function shuffleArray(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+        shuffleArray(this.state.questions);
 
         this.organizeQuestions(this.state.questions);
 
@@ -31,7 +42,7 @@ export class OrderedTest extends Component {
                 const results = this.props.results.map(result => {
                     return (
                         <div className="result" key={uuidv4()}>
-                            <p><b>Student:</b> {result.login}</p>
+                            <p>Student <b>{result.login}</b> finished test!</p>
                             <p><b>Category:</b> {result.category}</p>
                             <p><b>Points:</b> {result.points}/{result.totalPoints} {result.percent}</p>
                             <p><b>Date:</b> {result.date}</p>
@@ -47,6 +58,16 @@ export class OrderedTest extends Component {
         this._isMounted = false;
     }
     organizeQuestions = (questions) => {
+
+        function shuffleArray(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+        shuffleArray(questions);
 
         let counter = 0;
         const orderedTest = questions.map(question => {
@@ -117,6 +138,7 @@ export class OrderedTest extends Component {
                             <li><Cancel cancel={this.props.cancel} /></li>
                             <li><Add /></li>
                             <li><Print questions={this.state.questions} /></li>
+                            <li><FindResults /></li>
                         </div>
                         <div className="info">
                             {this.props.studentsList !== "" && <div className="students">

@@ -31,6 +31,11 @@ var questionState = {
     errorIMAGEURL: "",
 }
 
+var findResultState = {
+    isValid: false,
+    "errorLOGIN": ""
+}
+
 class Validation {
 
     static registerFormValidation = (login, password, password2, type, userKey) => {
@@ -55,7 +60,7 @@ class Validation {
     static teacherFormValidation = (amount, category) => {
         amount === "" ? teacherState.errorAMOUNT = "This field cannot be empty!" : isNaN(amount) ? teacherState.errorAMOUNT = "You cannot give letters here!" : teacherState.errorAMOUNT = "";
         category === "" ? teacherState.errorCATEGORY = "You must choose category!" : teacherState.errorCATEGORY = "";
-        teacherState.errorAMOUNT === "" && teacherState.errorCATEGORY === "" ? teacherState.isValid = true : teacherState.isValid = false
+        teacherState.errorAMOUNT === "" && teacherState.errorCATEGORY === "" ? teacherState.isValid = true : teacherState.isValid = false;
         return teacherState;
     }
 
@@ -69,7 +74,13 @@ class Validation {
         category === "" ? questionState.errorCATEGORY = "Choose category!" : questionState.errorCATEGORY = "";
         imageUrl === "" ? questionState.errorIMAGEURL = "" : !imageUrl.startsWith("img/") ? questionState.errorIMAGEURL = "Image url have to starts with img/ (example: img/question1.png)" : imageUrl.startsWith("img/") && imageUrl.length < 8 ? questionState.errorIMAGEURL = "Type proper image url!" : imageUrl.startsWith("img/") && imageUrl.length > 8 && (imageUrl.endsWith('.jpg') || imageUrl.endsWith('.png')) ? questionState.errorIMAGEURL = "" : questionState.errorIMAGEURL = "Type proper image url!";
         body !== "" && answerA !== "" && answerB !== "" && answerC !== "" && answerD !== "" && properAnswer !== "" && category !== "" && ((imageUrl !== "" && imageUrl.startsWith('img/') && imageUrl.length > 8 && (imageUrl.endsWith('.jpg') || imageUrl.endsWith('.png'))) || imageUrl === "") ? questionState.isValid = true : questionState.isValid = false
-        return questionState
+        return questionState;
+    }
+
+    static findResultValidation = (login) => {
+        login !== "" ? findResultState.errorLOGIN = "" : findResultState.errorLOGIN = "Type your student login!"
+        findResultState.errorLOGIN === "" ? findResultState.isValid = true : findResultState.isValid = false;
+        return findResultState;
     }
 
 }

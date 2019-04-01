@@ -10,7 +10,9 @@ export class StudentHome extends Component {
         orderedTest: "",
         properAnswers: [],
         login: "",
-        category: ""
+        category: "",
+        points: "",
+        percent: ""
     }
     componentDidMount() {
 
@@ -135,6 +137,11 @@ export class StudentHome extends Component {
 
         }
 
+        this.setState({
+            points: points,
+            percent: Math.round((points / this.state.questions.length) * 100) + '%'
+        })
+
         $('.submit').prop("disabled", true);
 
     }
@@ -148,6 +155,7 @@ export class StudentHome extends Component {
                                 Welcome {this.props.login}
                             </div>
                             <li><Logout /></li>
+                            {this.state.points !== "" && <li className="pointResult">Uzyskałeś {this.state.points}/{this.state.questions.length} punktów - {this.state.percent}</li>}
                         </div>
                     </ul>
                 </div>

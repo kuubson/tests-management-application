@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Logout from '../Buttons/Logout'
 import Add from '../Buttons/Add';
+import FindResults from '../Buttons/FindResults';
 
 export class TeacherForm extends Component {
     render() {
@@ -10,10 +11,11 @@ export class TeacherForm extends Component {
                     <ul className="menu-items">
                         <div className="buttons">
                             <div className="welcome">
-                                Your login: {this.props.login}
+                                Welcome {this.props.login}
                             </div>
                             <li><Logout /></li>
                             <li><Add /></li>
+                            <li><FindResults /></li>
                         </div>
                     </ul>
                 </div>
