@@ -8,21 +8,24 @@ import axios from 'axios'
 const uuidv4 = require('uuid/v4');
 
 export class OrderedTest extends Component {
+    _isMounted = false;
     state = {
         questions: this.props.questions,
         orderedTest: "",
         results: ""
     }
-    _isMounted = false;
-    componentWillMount() {
-        this.organizeQuestions(this.state.questions);
-    }
     componentDidMount() {
+
         this._isMounted = true;
+
+        this.organizeQuestions(this.state.questions);
+
         this.props.socket.on('sendResult', async (data) => {
-            const gettingNewestResultProcess = await axios.post('/getNewestResult', {
-                login: data.login
-            });
+            if (this._isMounted) {
+                var gettingNewestResultProcess = await axios.post('/getNewestResult', {
+                    login: data.login
+                });
+            }
             if (gettingNewestResultProcess) {
                 this.props.setResults(gettingNewestResultProcess.data);
                 const results = this.props.results.map(result => {
@@ -35,16 +38,16 @@ export class OrderedTest extends Component {
                         </div>
                     )
                 })
-                if (this._isMounted) {
-                    this.setState({ results })
-                }
+                this.setState({ results })
             }
         })
+
     }
     componentWillUnmount() {
         this._isMounted = false;
     }
     organizeQuestions = (questions) => {
+
         let counter = 0;
         const orderedTest = questions.map(question => {
             counter++;
@@ -64,35 +67,42 @@ export class OrderedTest extends Component {
         this.setState({
             orderedTest
         });
+
     }
     handleDeleteQuestion = (id) => {
-        const updatedQuestions = this.state.questions.filter(question => {
-            return question._id !== id
-        })
-        let counter = 0;
-        const orderedTest = updatedQuestions.map(question => {
-            counter++;
-            return (
-                <div className="question" key={question._id} onClick={() => this.handleDeleteQuestion(question._id)}>
-                    {(!question.imageUrl.startsWith("img/")) ? (null) : (
-                        <img src={question.imageUrl} alt={question.imageUrl} />
-                    )}
-                    <div className="body alert alert-dark font-weight-bold">{counter + ". " + question.body}</div>
-                    <div className="answer alert alert-success">{"A. " + question.answerA}</div>
-                    <div className="answer alert alert-success">{"B. " + question.answerB}</div>
-                    <div className="answer alert alert-success">{"C. " + question.answerC}</div>
-                    <div className="answer alert alert-success">{"D. " + question.answerD}</div>
-                </div>
-            )
-        })
-        if (this.state.questions.length === 2) {
-            $('.cancel').click();
+
+        if (this._isMounted) {
+
+            const updatedQuestions = this.state.questions.filter(question => {
+                return question._id !== id
+            })
+            let counter = 0;
+            const orderedTest = updatedQuestions.map(question => {
+                counter++;
+                return (
+                    <div className="question" key={question._id} onClick={() => this.handleDeleteQuestion(question._id)}>
+                        {(!question.imageUrl.startsWith("img/")) ? (null) : (
+                            <img src={question.imageUrl} alt={question.imageUrl} />
+                        )}
+                        <div className="body alert alert-dark font-weight-bold">{counter + ". " + question.body}</div>
+                        <div className="answer alert alert-success">{"A. " + question.answerA}</div>
+                        <div className="answer alert alert-success">{"B. " + question.answerB}</div>
+                        <div className="answer alert alert-success">{"C. " + question.answerC}</div>
+                        <div className="answer alert alert-success">{"D. " + question.answerD}</div>
+                    </div>
+                )
+            })
+            if (this.state.questions.length === 2) {
+                $('.cancel').click();
+            }
+            this.setState({
+                questions: updatedQuestions,
+                orderedTest: orderedTest
+            });
+            this.props.update(updatedQuestions);
+
         }
-        this.setState({
-            questions: updatedQuestions,
-            orderedTest: orderedTest
-        });
-        this.props.update(updatedQuestions);
+
     }
     render() {
         return (

@@ -4,6 +4,7 @@ import $ from 'jquery'
 import axios from 'axios';
 
 export class StudentHome extends Component {
+    _isMounted = false;
     state = {
         questions: "",
         orderedTest: "",
@@ -12,6 +13,9 @@ export class StudentHome extends Component {
         category: ""
     }
     componentDidMount() {
+
+        this._isMounted = true;
+
         this.props.socket.on('sendTest', (questions) => {
             function shuffleArray(array) {
                 for (var i = array.length - 1; i > 0; i--) {
@@ -22,14 +26,22 @@ export class StudentHome extends Component {
                 }
             }
             shuffleArray(questions);
-            this.setState({ questions, category: questions[0].category, login: this.props.login });
-            this.organizeQuestions(this.state.questions);
+
+            if (this._isMounted === true) {
+                this.setState({ questions, category: questions[0].category, login: this.props.login, properAnswers: [] });
+                this.organizeQuestions(this.state.questions);
+            }
+
         })
+
+    }
+    componentWillUnmount() {
+        this._isMounted = false;
     }
     organizeQuestions = (questions) => {
         let counter = 0;
         const orderedTest = questions.map(question => {
-            this.state.properAnswers.push(question.properAnswer);
+            this.setState({ properAnswers: [...this.state.properAnswers, question.properAnswer] });
             counter++;
             return (
                 <div className="question" key={question._id}>
@@ -106,18 +118,22 @@ export class StudentHome extends Component {
         const seconds = leadingZero(date.getSeconds());
         const currentDate = year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
 
-        const savingResultProcess = await axios.post('/saveResult', {
-            login: this.state.login,
-            category: this.state.category,
-            points: points,
-            totalPoints: this.state.questions.length,
-            percent: Math.round((points / this.state.questions.length) * 100) + '%',
-            date: currentDate
-        })
+        if (this._isMounted) {
 
-        savingResultProcess.data.done && this.props.socket.emit('sendResult', {
-            login: this.state.login,
-        })
+            const savingResultProcess = await axios.post('/saveResult', {
+                login: this.state.login,
+                category: this.state.category,
+                points: points,
+                totalPoints: this.state.questions.length,
+                percent: Math.round((points / this.state.questions.length) * 100) + '%',
+                date: currentDate
+            })
+
+            savingResultProcess.data.done && this.props.socket.emit('sendResult', {
+                login: this.state.login,
+            })
+
+        }
 
         $('.submit').prop("disabled", true);
 

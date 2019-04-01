@@ -4,6 +4,7 @@ import Logout from '../Buttons/Logout'
 import axios from 'axios'
 
 export class BlindStudentHome extends Component {
+    _isMounted = false;
     state = {
         login: this.props.login,
         body: "",
@@ -18,7 +19,8 @@ export class BlindStudentHome extends Component {
         totalPoints: 0,
         currentQuestion: 0,
         currentAnswer: 0,
-        isAnswered: false
+        isAnswered: false,
+        canSpeak: true
     }
     serveQuestion = (test) => {
 
@@ -41,13 +43,13 @@ export class BlindStudentHome extends Component {
 
         const welcomeMessage = new SpeechSynthesisUtterance
             (`Witaj! Twój nauczyciel wylosował Ci ${test.length} pytania.
-            Aby odsłuchać wiadomość powitalną ponownie naciśnij klawisz R
-            Aby rozpocząść test odsłuchaj pierwsze pytanie klikając spację. 
-            Aby poruszać się pomiędzy odpowiedziami steruj klawiszami W oraz S. 
-            Aby wybrać odpowiedź klikaj odpowiednio klawisze A, B, C lub D. 
-            Aby zatwierdzić swoją odpowiedź kliknij klawisz ENTER.
-            Aby przerwać mój głos użyj klawisza X.
-            Gdy test dobiegnie końca zostaniesz o tym poinformowany!`
+                Aby odsłuchać wiadomość powitalną ponownie naciśnij klawisz R
+                Aby rozpocząść test odsłuchaj pierwsze pytanie klikając spację. 
+                Aby poruszać się pomiędzy odpowiedziami steruj klawiszami W oraz S. 
+                Aby wybrać odpowiedź klikaj odpowiednio klawisze A, B, C lub D. 
+                Aby zatwierdzić swoją odpowiedź kliknij klawisz ENTER.
+                Aby przerwać mój głos użyj klawisza X.
+                Gdy test dobiegnie końca zostaniesz o tym poinformowany!`
             );
 
         if (this.state.currentQuestion === 0) {
@@ -89,73 +91,77 @@ export class BlindStudentHome extends Component {
                         speech.speak(welcomeMessage);
                     }, 500);
                 }
-                if (e.keyCode === 32) {
-                    speech.cancel();
-                    setTimeout(() => {
-                        speech.speak(voiceMessages[0]);
-                    }, 500);
-                }
-                if (e.keyCode === 87) {
-                    this.setState({
-                        currentAnswer: this.state.currentAnswer + 1
-                    })
-                    speech.cancel();
-                    if (this.state.currentAnswer >= 0 && this.state.currentAnswer <= 4) {
+                if (this.state.canSpeak) {
+
+                    if (e.keyCode === 32) {
+                        speech.cancel();
                         setTimeout(() => {
-                            speech.speak(voiceMessages[this.state.currentAnswer]);
+                            speech.speak(voiceMessages[0]);
                         }, 500);
                     }
-                }
-                if (e.keyCode === 83) {
-                    this.setState({
-                        currentAnswer: this.state.currentAnswer - 1
-                    })
-                    speech.cancel();
-                    if (this.state.currentAnswer >= 0 && this.state.currentAnswer <= 4) {
+                    if (e.keyCode === 87) {
+                        this.setState({
+                            currentAnswer: this.state.currentAnswer + 1
+                        })
+                        speech.cancel();
+                        if (this.state.currentAnswer >= 0 && this.state.currentAnswer <= 4) {
+                            setTimeout(() => {
+                                speech.speak(voiceMessages[this.state.currentAnswer]);
+                            }, 500);
+                        }
+                    }
+                    if (e.keyCode === 83) {
+                        this.setState({
+                            currentAnswer: this.state.currentAnswer - 1
+                        })
+                        speech.cancel();
+                        if (this.state.currentAnswer >= 0 && this.state.currentAnswer <= 4) {
+                            setTimeout(() => {
+                                speech.speak(voiceMessages[this.state.currentAnswer]);
+                            }, 500);
+                        }
+                    }
+                    if (e.keyCode === 65) {
+                        speech.cancel();
+                        this.setState({
+                            userAnswer: 'A',
+                            isAnswered: true
+                        })
                         setTimeout(() => {
-                            speech.speak(voiceMessages[this.state.currentAnswer]);
+                            speech.speak(new SpeechSynthesisUtterance('Wybrałeś odpowiedź A, kliknij enter aby zatwierdzić odpowiedź'));
                         }, 500);
                     }
-                }
-                if (e.keyCode === 65) {
-                    speech.cancel();
-                    this.setState({
-                        userAnswer: 'A',
-                        isAnswered: true
-                    })
-                    setTimeout(() => {
-                        speech.speak(new SpeechSynthesisUtterance('Wybrałeś odpowiedź A, kliknij enter aby zatwierdzić odpowiedź'));
-                    }, 500);
-                }
-                if (e.keyCode === 66) {
-                    speech.cancel();
-                    this.setState({
-                        userAnswer: 'B',
-                        isAnswered: true
-                    })
-                    setTimeout(() => {
-                        speech.speak(new SpeechSynthesisUtterance('Wybrałeś odpowiedź B, kliknij enter aby zatwierdzić odpowiedź'));
-                    }, 500);
-                }
-                if (e.keyCode === 67) {
-                    speech.cancel();
-                    this.setState({
-                        userAnswer: 'C',
-                        isAnswered: true
-                    })
-                    setTimeout(() => {
-                        speech.speak(new SpeechSynthesisUtterance('Wybrałeś odpowiedź C, kliknij enter aby zatwierdzić odpowiedź'));
-                    }, 500);
-                }
-                if (e.keyCode === 68) {
-                    speech.cancel();
-                    this.setState({
-                        userAnswer: 'D',
-                        isAnswered: true
-                    })
-                    setTimeout(() => {
-                        speech.speak(new SpeechSynthesisUtterance('Wybrałeś odpowiedź D, kliknij enter aby zatwierdzić odpowiedź'));
-                    }, 500);
+                    if (e.keyCode === 66) {
+                        speech.cancel();
+                        this.setState({
+                            userAnswer: 'B',
+                            isAnswered: true
+                        })
+                        setTimeout(() => {
+                            speech.speak(new SpeechSynthesisUtterance('Wybrałeś odpowiedź B, kliknij enter aby zatwierdzić odpowiedź'));
+                        }, 500);
+                    }
+                    if (e.keyCode === 67) {
+                        speech.cancel();
+                        this.setState({
+                            userAnswer: 'C',
+                            isAnswered: true
+                        })
+                        setTimeout(() => {
+                            speech.speak(new SpeechSynthesisUtterance('Wybrałeś odpowiedź C, kliknij enter aby zatwierdzić odpowiedź'));
+                        }, 500);
+                    }
+                    if (e.keyCode === 68) {
+                        speech.cancel();
+                        this.setState({
+                            userAnswer: 'D',
+                            isAnswered: true
+                        })
+                        setTimeout(() => {
+                            speech.speak(new SpeechSynthesisUtterance('Wybrałeś odpowiedź D, kliknij enter aby zatwierdzić odpowiedź'));
+                        }, 500);
+                    }
+
                 }
                 if (e.keyCode === 88) {
                     speech.cancel();
@@ -182,16 +188,22 @@ export class BlindStudentHome extends Component {
                                     speech.speak(new SpeechSynthesisUtterance(`Koniec testu. Twój wynik to ${this.state.points} na ${test.length} punktów. Wynik został przesłany do nauczyciela.`));
                                 }, 500);
                                 const currentDate = getTime();
-                                const savingResultProcess = await axios.post('/saveResult', {
-                                    login: this.state.login,
-                                    category: this.state.category,
-                                    points: this.state.points,
-                                    totalPoints: test.length,
-                                    percent: Math.round((this.state.points / test.length) * 100) + '%',
-                                    date: currentDate
-                                })
-                                savingResultProcess.data.done && this.props.socket.emit('sendResult', {
-                                    login: this.state.login,
+                                if (this._isMounted) {
+                                    const savingResultProcess = await axios.post('/saveResult', {
+                                        login: this.state.login,
+                                        category: this.state.category,
+                                        points: this.state.points,
+                                        totalPoints: test.length,
+                                        percent: Math.round((this.state.points / test.length) * 100) + '%',
+                                        date: currentDate
+                                    })
+                                    savingResultProcess.data.done && this.props.socket.emit('sendResult', {
+                                        login: this.state.login,
+                                    })
+                                }
+                                this.setState({
+                                    isAnswered: false,
+                                    canSpeak: false
                                 })
                             }
                         } else {
@@ -213,16 +225,22 @@ export class BlindStudentHome extends Component {
                                     speech.speak(new SpeechSynthesisUtterance(`Koniec testu. Twój wynik to ${this.state.points} na ${test.length} punktów. Wynik został przesłany do nauczyciela.`));
                                 }, 500);
                                 const currentDate = getTime();
-                                const savingResultProcess = await axios.post('/saveResult', {
-                                    login: this.state.login,
-                                    category: this.state.category,
-                                    points: this.state.points,
-                                    totalPoints: test.length,
-                                    percent: Math.round((this.state.points / test.length) * 100) + '%',
-                                    date: currentDate
-                                })
-                                savingResultProcess.data.done && this.props.socket.emit('sendResult', {
-                                    login: this.state.login,
+                                if (this._isMounted) {
+                                    const savingResultProcess = await axios.post('/saveResult', {
+                                        login: this.state.login,
+                                        category: this.state.category,
+                                        points: this.state.points,
+                                        totalPoints: test.length,
+                                        percent: Math.round((this.state.points / test.length) * 100) + '%',
+                                        date: currentDate
+                                    })
+                                    savingResultProcess.data.done && this.props.socket.emit('sendResult', {
+                                        login: this.state.login,
+                                    })
+                                }
+                                this.setState({
+                                    isAnswered: false,
+                                    canSpeak: false
                                 })
                             }
                         }
@@ -231,10 +249,15 @@ export class BlindStudentHome extends Component {
             }
         }
     }
+
     componentDidMount() {
+        this._isMounted = true;
         this.props.socket.on('sendTest', (test) => {
             this.serveQuestion(test);
         })
+    }
+    componentWillUnmount() {
+        this._isMounted = false;
     }
     render() {
         return (

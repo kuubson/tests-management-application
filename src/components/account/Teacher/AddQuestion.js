@@ -7,10 +7,17 @@ import Validation from '../../../helpers/Validation';
 import axios from 'axios'
 
 export class AddQuestion extends Component {
+    _isMounted = false;
     componentWillMount() {
         if (!getJwt()) {
             this.props.history.push('/');
         }
+    }
+    componentDidMount() {
+        this._isMounted = true;
+    }
+    componentWillUnmount() {
+        this._isMounted = false;
     }
     state = {
         body: "",
@@ -50,25 +57,31 @@ export class AddQuestion extends Component {
         })
     }
     handleSubmit = async (e) => {
-        e.preventDefault();
-        const { body, answerA, answerB, answerC, answerD, properAnswer, category, imageUrl } = this.state
-        const validation = Validation.newQuestionValidation(body, answerA, answerB, answerC, answerD, properAnswer, category, imageUrl)
-        this.setState(validation);
-        if (validation.isValid) {
-            const savingTestProcess = await axios.post('/saveQuestion', {
-                body,
-                answerA,
-                answerB,
-                answerC,
-                answerD,
-                properAnswer,
-                category,
-                imageUrl
-            })
-            savingTestProcess.data.done ? this.setState({ success: savingTestProcess.data.message, "error": "" }) || setTimeout(() => {
-                this.props.history.push('/account')
-            }, 2500) : this.setState({ "error": savingTestProcess.data.message, "success": "" });
+
+        if (this._isMounted) {
+
+            e.preventDefault();
+            const { body, answerA, answerB, answerC, answerD, properAnswer, category, imageUrl } = this.state
+            const validation = Validation.newQuestionValidation(body, answerA, answerB, answerC, answerD, properAnswer, category, imageUrl)
+            this.setState(validation);
+            if (validation.isValid) {
+                const savingTestProcess = await axios.post('/saveQuestion', {
+                    body,
+                    answerA,
+                    answerB,
+                    answerC,
+                    answerD,
+                    properAnswer,
+                    category,
+                    imageUrl
+                })
+                savingTestProcess.data.done ? this.setState({ success: savingTestProcess.data.message, "error": "" }) || setTimeout(() => {
+                    this.props.history.push('/account')
+                }, 2500) : this.setState({ "error": savingTestProcess.data.message, "success": "" });
+            }
+
         }
+
     }
     render() {
         return (
