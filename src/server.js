@@ -19,7 +19,6 @@ require('./config/passport')(passport);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
-app.use(express.static(path.resolve(__dirname, 'build')));
 app.use('/', require('./routes/registerUser'));
 app.use('/', require('./routes/loginUser'));
 app.use('/', require('./routes/getUser'));
@@ -28,6 +27,8 @@ app.use('/', require('./routes/saveQuestion'));
 app.use('/', require('./routes/saveResult'));
 app.use('/', require('./routes/getResult'));
 app.use('/', require('./routes/getNewestResult'));
+
+app.use(express.static(path.resolve(__dirname, 'build')));
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
