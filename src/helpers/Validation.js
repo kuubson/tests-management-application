@@ -45,8 +45,7 @@ class Validation {
         password.length < 5 ? registerState.errorPASSWORD = "Password should be at least 5 characters long!" : registerState.errorPASSWORD = "";
         password2 !== password ? registerState.errorPASSWORD2 = "Passwords don't match!" : registerState.errorPASSWORD2 = "";
         type === "" ? registerState.errorTYPE = "Choose account type!" : registerState.errorTYPE = "";
-        userKey === "" ? registerState.errorUSERKEY = "" : userKey.length < 7 ? registerState.errorUSERKEY = "Give proper teacher authorization key!" : registerState.errorUSERKEY = "";
-        registerState.errorLOGIN === "" && registerState.errorPASSWORD === "" && registerState.errorPASSWORD2 === "" && registerState.errorTYPE === "" && registerState.errorUSERKEY === "" ? registerState.isValid = true : registerState.isValid = false
+        registerState.errorLOGIN === "" && registerState.errorPASSWORD === "" && registerState.errorPASSWORD2 === "" && registerState.errorTYPE === "" ? registerState.isValid = true : registerState.isValid = false
         return registerState;
     }
 

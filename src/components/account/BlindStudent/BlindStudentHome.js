@@ -20,9 +20,13 @@ export class BlindStudentHome extends Component {
         currentQuestion: 0,
         currentAnswer: 0,
         isAnswered: false,
-        canSpeak: true
+        canSpeak: ""
     }
     serveQuestion = (test) => {
+
+        this.setState({
+            canSpeak: true
+        })
 
         function leadingZero(time) {
             return (time < 10 ? '0' : '') + time;
@@ -45,7 +49,7 @@ export class BlindStudentHome extends Component {
             (`Witaj! Twój nauczyciel wylosował Ci ${test.length} pytania.
                 Aby odsłuchać wiadomość powitalną ponownie naciśnij klawisz R
                 Aby rozpocząść test odsłuchaj pierwsze pytanie klikając spację. 
-                Po zatwierdzeniu każdej udzielonej odpowiedzi otrzymasz informację czy była ona błędna czy poprawna. Kolejne pytanie wywołaj kalwiszem spacja.
+                Po zatwierdzeniu każdej udzielonej odpowiedzi otrzymasz informację czy była ona błędna czy poprawna. Kolejne pytanie wywołaj klawiszem spacja.
                 Aby poruszać się pomiędzy odpowiedziami steruj klawiszami W oraz S. 
                 Aby wybrać odpowiedź klikaj odpowiednio klawisze A, B, C lub D. 
                 Aby zatwierdzić swoją odpowiedź kliknij klawisz ENTER.
@@ -86,12 +90,7 @@ export class BlindStudentHome extends Component {
             voiceMessages.push(messageANSWER_D);
 
             document.body.onkeyup = async (e) => {
-                if (e.keyCode === 82) {
-                    speech.cancel();
-                    setTimeout(() => {
-                        speech.speak(welcomeMessage);
-                    }, 500);
-                }
+
                 if (this.state.canSpeak) {
 
                     if (e.keyCode === 32) {
@@ -104,22 +103,80 @@ export class BlindStudentHome extends Component {
                         this.setState({
                             currentAnswer: this.state.currentAnswer + 1
                         })
-                        speech.cancel();
-                        if (this.state.currentAnswer >= 0 && this.state.currentAnswer <= 4) {
+                        console.log(this.state.currentAnswer);
+                        if (this.state.currentAnswer === 1) {
+                            speech.cancel();
                             setTimeout(() => {
-                                speech.speak(voiceMessages[this.state.currentAnswer]);
+                                speech.speak(messageANSWER_A);
                             }, 500);
+                        }
+                        else if (this.state.currentAnswer === 2) {
+                            speech.cancel();
+                            setTimeout(() => {
+                                speech.speak(messageANSWER_B);
+                            }, 500);
+                        }
+                        else if (this.state.currentAnswer === 3) {
+                            speech.cancel();
+                            setTimeout(() => {
+                                speech.speak(messageANSWER_C);
+                            }, 500);
+                        }
+                        else if (this.state.currentAnswer === 4) {
+                            speech.cancel();
+                            setTimeout(() => {
+                                speech.speak(messageANSWER_D);
+                            }, 500);
+                        } else {
+                            if (this.state.currentAnswer > 4) {
+                                speech.cancel();
+                                setTimeout(() => {
+                                    speech.speak(messageANSWER_A);
+                                }, 500);
+                                this.setState({
+                                    currentAnswer: 1
+                                })
+                            }
                         }
                     }
                     if (e.keyCode === 83) {
                         this.setState({
                             currentAnswer: this.state.currentAnswer - 1
                         })
-                        speech.cancel();
-                        if (this.state.currentAnswer >= 0 && this.state.currentAnswer <= 4) {
+                        console.log(this.state.currentAnswer);
+                        if (this.state.currentAnswer === 1) {
+                            speech.cancel();
                             setTimeout(() => {
-                                speech.speak(voiceMessages[this.state.currentAnswer]);
+                                speech.speak(messageANSWER_A);
                             }, 500);
+                        }
+                        else if (this.state.currentAnswer === 2) {
+                            speech.cancel();
+                            setTimeout(() => {
+                                speech.speak(messageANSWER_B);
+                            }, 500);
+                        }
+                        else if (this.state.currentAnswer === 3) {
+                            speech.cancel();
+                            setTimeout(() => {
+                                speech.speak(messageANSWER_C);
+                            }, 500);
+                        }
+                        else if (this.state.currentAnswer === 4) {
+                            speech.cancel();
+                            setTimeout(() => {
+                                speech.speak(messageANSWER_D);
+                            }, 500);
+                        } else {
+                            if (this.state.currentAnswer < 1) {
+                                speech.cancel();
+                                setTimeout(() => {
+                                    speech.speak(messageANSWER_A);
+                                }, 500);
+                                this.setState({
+                                    currentAnswer: 1
+                                })
+                            }
                         }
                     }
                     if (e.keyCode === 65) {
@@ -163,6 +220,20 @@ export class BlindStudentHome extends Component {
                         }, 500);
                     }
 
+                    if (e.keyCode === 82) {
+                        speech.cancel();
+                        setTimeout(() => {
+                            speech.speak(welcomeMessage);
+                        }, 500);
+                    }
+
+                } else {
+                    if (e.keyCode === 82) {
+                        speech.cancel();
+                        setTimeout(() => {
+                            speech.speak(new SpeechSynthesisUtterance('Test dobiegł końca. Interakcja z testem została zablokowana!'));
+                        }, 500);
+                    }
                 }
                 if (e.keyCode === 88) {
                     speech.cancel();
@@ -172,13 +243,17 @@ export class BlindStudentHome extends Component {
                         if (this.state.userAnswer === this.state.properAnswer) {
                             speech.cancel();
                             setTimeout(() => {
-                                speech.speak(new SpeechSynthesisUtterance('Poprawna odpowiedź. Kliknij spację aby usłyszeć kolejne pytanie'));
+                                speech.speak(new SpeechSynthesisUtterance('Poprawna odpowiedź.'));
                             }, 500);
                             this.setState({
                                 points: this.state.points + 1,
                                 currentQuestion: this.state.currentQuestion + 1
                             })
                             if (this.state.currentQuestion <= test.length - 1) {
+                                speech.cancel();
+                                setTimeout(() => {
+                                    speech.speak(new SpeechSynthesisUtterance('Kliknij spację aby usłyszeć kolejne pytanie'));
+                                }, 500);
                                 this.serveQuestion(test);
                             } else {
                                 this.setState({
@@ -186,7 +261,7 @@ export class BlindStudentHome extends Component {
                                 })
                                 speech.cancel();
                                 setTimeout(() => {
-                                    speech.speak(new SpeechSynthesisUtterance(`Koniec testu. Twój wynik to ${this.state.points} na ${test.length} punktów. Wynik został przesłany do nauczyciela.`));
+                                    speech.speak(new SpeechSynthesisUtterance(`Koniec testu. Twój wynik to ${this.state.points} na ${test.length} punktów. Wynik został przesłany do nauczyciela. Interakcja z testem została zablokowana!`));
                                 }, 500);
                                 const currentDate = getTime();
                                 if (this._isMounted) {
@@ -203,6 +278,18 @@ export class BlindStudentHome extends Component {
                                     })
                                 }
                                 this.setState({
+                                    body: "",
+                                    answerA: "",
+                                    answerB: "",
+                                    answerC: "",
+                                    answerD: "",
+                                    properAnswer: "",
+                                    category: "",
+                                    userAnswer: "",
+                                    points: 0,
+                                    totalPoints: 0,
+                                    currentQuestion: 0,
+                                    currentAnswer: 0,
                                     isAnswered: false,
                                     canSpeak: false
                                 })
@@ -210,12 +297,16 @@ export class BlindStudentHome extends Component {
                         } else {
                             speech.cancel();
                             setTimeout(() => {
-                                speech.speak(new SpeechSynthesisUtterance('Błędna odpowiedź. Kliknij spację aby usłyszeć kolejne pytanie'));
+                                speech.speak(new SpeechSynthesisUtterance('Błędna odpowiedź.'));
                             }, 500);
                             this.setState({
                                 currentQuestion: this.state.currentQuestion + 1
                             })
                             if (this.state.currentQuestion <= test.length - 1) {
+                                speech.cancel();
+                                setTimeout(() => {
+                                    speech.speak(new SpeechSynthesisUtterance('Kliknij spację aby usłyszeć kolejne pytanie'));
+                                }, 500);
                                 this.serveQuestion(test);
                             } else {
                                 this.setState({
@@ -223,7 +314,7 @@ export class BlindStudentHome extends Component {
                                 })
                                 speech.cancel();
                                 setTimeout(() => {
-                                    speech.speak(new SpeechSynthesisUtterance(`Koniec testu. Twój wynik to ${this.state.points} na ${test.length} punktów. Wynik został przesłany do nauczyciela.`));
+                                    speech.speak(new SpeechSynthesisUtterance(`Koniec testu. Twój wynik to ${this.state.points} na ${test.length} punktów. Wynik został przesłany do nauczyciela. Interakcja z testem została zablokowana!`));
                                 }, 500);
                                 const currentDate = getTime();
                                 if (this._isMounted) {
@@ -240,6 +331,18 @@ export class BlindStudentHome extends Component {
                                     })
                                 }
                                 this.setState({
+                                    body: "",
+                                    answerA: "",
+                                    answerB: "",
+                                    answerC: "",
+                                    answerD: "",
+                                    properAnswer: "",
+                                    category: "",
+                                    userAnswer: "",
+                                    points: 0,
+                                    totalPoints: 0,
+                                    currentQuestion: 0,
+                                    currentAnswer: 0,
                                     isAnswered: false,
                                     canSpeak: false
                                 })
@@ -276,7 +379,7 @@ export class BlindStudentHome extends Component {
                             {this.state.body && <div className="alert alert-warning student-info">{`Witaj! Twój nauczyciel wylosował Ci ${this.state.totalPoints} pytania`}</div>}
                             <div className="alert alert-warning student-info">Aby odsłuchać wiadomość powitalną ponownie naciśnij klawisz R</div>
                             <div className="alert alert-warning student-info">Aby rozpocząść test odsłuchaj pierwsze pytanie klikając spację.</div>
-                            <div className="alert alert-warning student-info">Po zatwierdzeniu każdej udzielonej odpowiedzi otrzymasz informację czy była ona błędna czy poprawna. Kolejne pytanie wywołaj kalwiszem spacja</div>
+                            <div className="alert alert-warning student-info">Po zatwierdzeniu każdej udzielonej odpowiedzi otrzymasz informację czy była ona błędna czy poprawna. Kolejne pytanie wywołaj klawiszem spacja</div>
                             <div className="alert alert-warning student-info">Aby poruszać się pomiędzy odpowiedziami steruj klawiszami W oraz S. </div>
                             <div className="alert alert-warning student-info">Aby wybrać odpowiedź klikaj odpowiednio klawisze A, B, C lub D.</div>
                             <div className="alert alert-warning student-info">Aby zatwierdzić swoją odpowiedź kliknij klawisz ENTER.</div>

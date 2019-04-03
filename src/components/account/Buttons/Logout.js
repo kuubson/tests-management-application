@@ -9,7 +9,7 @@ export class Logout extends Component {
     }
     render() {
         return (
-            <button className="btn btn-dark" onClick={this.handleClick}>Logout</button>
+            <button className="logout btn btn-dark" onClick={this.handleClick}>Logout</button>
         )
     }
 }

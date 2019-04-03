@@ -33,8 +33,6 @@ router.post('/getResult', (req, res) => {
         }
     })
 
-
-
 })
 
 module.exports = router;

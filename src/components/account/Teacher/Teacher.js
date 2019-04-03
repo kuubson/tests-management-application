@@ -16,10 +16,11 @@ export class Teacher extends Component {
         errorAMOUNT: "",
         errorCATEGORY: "",
         error: "",
-        success: ""
+        success: "",
+        isGenerated: false
     }
     componentWillMount() {
-        const socket = io('/teacher');
+        const socket = io('http://localhost:3001/teacher');
         this.setState({ socket });
     }
     componentDidMount() {
@@ -71,7 +72,8 @@ export class Teacher extends Component {
         this.setState({
             amount: "",
             category: "",
-            questions: ""
+            questions: "",
+            isGenerated: false
         })
     }
     update = (questions) => {
@@ -89,13 +91,13 @@ export class Teacher extends Component {
                 amount,
                 category
             })
-            gettingTestProcess.data.done ? this.setState({ "questions": gettingTestProcess.data.questions, "error": "", success: "" }) : this.setState({ "error": gettingTestProcess.data.message, "success": "", "questions": "" });
+            gettingTestProcess.data.done ? this.setState({ "questions": gettingTestProcess.data.questions, "error": "", success: "", isGenerated: true }) : this.setState({ "error": gettingTestProcess.data.message, "success": "", "questions": "" });
         }
     }
     render() {
         return (
             <div className="teacher flexfullwh">
-                {this.state.questions === "" ? <TeacherForm
+                {!this.state.isGenerated ? <TeacherForm
                     handleSubmit={this.handleSubmit}
                     handleChange={this.handleChange}
                     handleSelectChange={this.handleSelectChange}

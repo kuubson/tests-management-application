@@ -40,7 +40,10 @@ module.exports = (io) => {
                         io.of('/student').to(student.id).emit('sendTest', questions);
                     }
                     if (student.type == 'blind-student') {
-                        io.of('/blindStudent').to(student.id).emit('sendTest', questions);
+                        const questionsWithoutImages = questions.filter(question => {
+                            return question.imageUrl === ""
+                        })
+                        io.of('/blindStudent').to(student.id).emit('sendTest', questionsWithoutImages);
                     }
                 }
             })

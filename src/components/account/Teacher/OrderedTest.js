@@ -113,7 +113,7 @@ export class OrderedTest extends Component {
                     </div>
                 )
             })
-            if (this.state.questions.length === 2) {
+            if (this.state.questions.length === 1) {
                 $('.cancel').click();
             }
             this.setState({

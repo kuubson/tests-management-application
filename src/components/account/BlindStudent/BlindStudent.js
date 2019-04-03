@@ -7,7 +7,7 @@ export class BlindStudent extends Component {
         socket: ""
     }
     componentWillMount() {
-        const socket = io('/blindStudent');
+        const socket = io('http://localhost:3001/blindStudent');
         this.setState({ socket });
     }
     componentDidMount() {

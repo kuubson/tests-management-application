@@ -28,13 +28,6 @@ app.use('/', require('./routes/saveResult'));
 app.use('/', require('./routes/getResult'));
 app.use('/', require('./routes/getNewestResult'));
 
-app.use(express.static(path.resolve(__dirname, 'build')));
-
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
-});
-
-
 http.listen(port, () => console.log(`Server started at port ${port}`));
 
 

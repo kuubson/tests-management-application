@@ -37,7 +37,10 @@ export class Register extends Component {
         })
     }
     handleSubmit = async (e) => {
-
+        this.setState({
+            error: "",
+            success: ""
+        })
         e.preventDefault();
         const { login, password, password2, type, userKey } = this.state;
         const validation = Validation.registerFormValidation(login, password, password2, type, userKey);

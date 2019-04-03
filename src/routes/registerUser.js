@@ -14,7 +14,13 @@ router.post('/register', (req, res) => {
             });
         } else {
             if (type === 'teacher') {
-                if (userKey === 'stk2019') {
+                if (userKey === "") {
+                    res.send({
+                        done: false,
+                        message: 'Secret teacher key cannot be empty!'
+                    });
+                }
+                else if (userKey === 'stk2019') {
                     newUser = new User({
                         login,
                         password,
@@ -40,7 +46,14 @@ router.post('/register', (req, res) => {
                         done: false,
                         message: 'Cannot create teacher account with student account type chosen!'
                     });
-                } else {
+                }
+                else if (userKey !== "" && userKey !== 'stk2019') {
+                    res.send({
+                        done: false,
+                        message: 'You cannot use secret key as student! It is forbidden'
+                    });
+                }
+                else {
                     newUser = new User({
                         login,
                         password,
