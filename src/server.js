@@ -3,7 +3,7 @@ require('./config/dotenv')(dotenv);
 
 const express = require('express');
 const app = express();
-const http = require('http').createServer(app);
+const http = require('http').Server(app);
 const port = process.env.PORT || 3001;
 const path = require('path');
 
@@ -27,6 +27,12 @@ app.use('/', require('./routes/saveQuestion'));
 app.use('/', require('./routes/saveResult'));
 app.use('/', require('./routes/getResult'));
 app.use('/', require('./routes/getNewestResult'));
+
+app.use(express.static(__dirname + '/../../build'));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.resolve('build', 'index.html'));
+})
 
 http.listen(port, () => console.log(`Server started at port ${port}`));
 

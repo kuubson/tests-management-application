@@ -25,8 +25,9 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "dev": "concurrently \"nodemon ./src/server.js\" \"npm run start\"",
-    "start": "react-scripts start",
+    "start": "node ./src/server.js",
+    "dev": "concurrently \"nodemon ./src/server.js\" \"npm run development\"",
+    "development": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
