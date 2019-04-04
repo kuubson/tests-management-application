@@ -41,7 +41,7 @@ module.exports = (io) => {
                     }
                     if (student.type == 'blind-student') {
                         const questionsWithoutImages = questions.filter(question => {
-                            return question.imageUrl === ""
+                            return question.image === ""
                         })
                         io.of('/blindStudent').to(student.id).emit('sendTest', questionsWithoutImages);
                     }

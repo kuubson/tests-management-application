@@ -29,9 +29,10 @@ const QuestionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    imageUrl: {
-        type: String,
-    }
+    image: {
+        data: Buffer,
+        contentType: String,
+    },
 })
 
 const Question = mongoose.model('Question', QuestionSchema, 'questions');

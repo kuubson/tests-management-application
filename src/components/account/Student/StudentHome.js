@@ -45,11 +45,15 @@ export class StudentHome extends Component {
         const orderedTest = questions.map(question => {
             this.setState({ properAnswers: [...this.state.properAnswers, question.properAnswer] });
             counter++;
+            if (question.image) {
+                let imageUrl = btoa(new Uint8Array(question.image.data.data).reduce(function (data, byte) {
+                    return data + String.fromCharCode(byte);
+                }, ''));
+                question.imageUrl = imageUrl;
+            }
             return (
                 <div className="question" key={question._id}>
-                    {(!question.imageUrl.startsWith("img/")) ? (null) : (
-                        <img src={question.imageUrl} alt={question.imageUrl} />
-                    )}
+                    {question.imageUrl && <img src={`data:image/jpeg;base64,${question.imageUrl}`} alt="question" />}
                     <div className="body alert alert-dark font-weight-bold">{counter + ". " + question.body}</div>
                     <input id={`answerRadio1${question._id}`} type="radio" name={question._id} className="answerRadio" value="A" />
                     <label htmlFor={`answerRadio1${question._id}`} className="label">

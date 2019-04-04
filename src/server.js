@@ -27,13 +27,14 @@ app.use('/', require('./routes/saveQuestion'));
 app.use('/', require('./routes/saveResult'));
 app.use('/', require('./routes/getResult'));
 app.use('/', require('./routes/getNewestResult'));
+app.use('/', require('./routes/getImage'));
 
-app.use(express.static(__dirname + '/../../build'));
+app.use(express.static(path.resolve(__dirname, 'build')));
+
+app.use('/uploads', express.static(path.join(__dirname, './uploads')))
 
 app.get('/', (req, res) => {
-    res.sendFile(path.resolve('build', 'index.html'));
-})
+    res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+});
 
 http.listen(port, () => console.log(`Server started at port ${port}`));
-
-

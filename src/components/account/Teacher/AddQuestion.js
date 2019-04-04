@@ -4,8 +4,6 @@ import AddQuestionForm from './AddQuestionForm'
 import { getJwt } from '../../../helpers/getJwt'
 import Validation from '../../../helpers/Validation';
 
-import axios from 'axios'
-
 export class AddQuestion extends Component {
     _isMounted = false;
     componentWillMount() {
@@ -53,35 +51,31 @@ export class AddQuestion extends Component {
     }
     handleSelectChange = (e) => {
         this.setState({
-            category: e.target.value
+            [e.target.name]: e.target.value
         })
     }
-    handleSubmit = async (e) => {
-
-        if (this._isMounted) {
-
-            e.preventDefault();
-            const { body, answerA, answerB, answerC, answerD, properAnswer, category, imageUrl } = this.state
-            const validation = Validation.newQuestionValidation(body, answerA, answerB, answerC, answerD, properAnswer, category, imageUrl)
-            this.setState(validation);
-            if (validation.isValid) {
-                const savingTestProcess = await axios.post('/saveQuestion', {
-                    body,
-                    answerA,
-                    answerB,
-                    answerC,
-                    answerD,
-                    properAnswer,
-                    category,
-                    imageUrl
-                })
-                savingTestProcess.data.done ? this.setState({ success: savingTestProcess.data.message, "error": "" }) || setTimeout(() => {
-                    this.props.history.push('/account')
-                }, 2500) : this.setState({ "error": savingTestProcess.data.message, "success": "" });
-            }
-
+    handleFileChange = (e) => {
+        const reader = new FileReader();
+        reader.onloadend = function () {
+            console.log(reader.result);
         }
-
+        const file = e.target.files[0];
+        reader.readAsDataURL(file);
+    }
+    handleImage = (e) => {
+        e.preventDefault();
+        console.log('submitted image');
+    }
+    handleSubmit = (e) => {
+        const { body, answerA, answerB, answerC, answerD, properAnswer, category } = this.state
+        const validation = Validation.newQuestionValidation(body, answerA, answerB, answerC, answerD, properAnswer, category)
+        this.setState(validation);
+        console.log(validation.isValid);
+        if (validation.isValid) {
+            return true;
+        } else {
+            e.preventDefault();
+        }
     }
     render() {
         return (
@@ -90,6 +84,8 @@ export class AddQuestion extends Component {
                     handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}
                     handleSelectChange={this.handleSelectChange}
+                    handleFileChange={this.handleFileChange}
+                    handleImage={this.handleImage}
                     errorBODY={this.state.errorBODY}
                     errorANSWER_A={this.state.errorANSWER_A}
                     errorANSWER_B={this.state.errorANSWER_B}

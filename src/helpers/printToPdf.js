@@ -30,11 +30,12 @@ export const printToPdf = function (questionsArray, clearString) {
             doc.addPage();
         }
 
-        if ((questionsArray[x].imageUrl !== "") && (questionsArray[x].imageUrl.startsWith("img/"))) {
+        if (questionsArray[x].image) {
 
-            var img = new Image();
-            img.src = questionsArray[x].imageUrl;
-            doc.addImage(img, pageCenter / 2.6, height, 140, 50);
+            let imageUrl = btoa(new Uint8Array(questionsArray[x].image.data.data).reduce(function (data, byte) {
+                return data + String.fromCharCode(byte);
+            }, ''));
+            doc.addImage(imageUrl, pageCenter / 2.6, height, 140, 50);
             height += 60;
 
             if (height > pageHeight - 60) {

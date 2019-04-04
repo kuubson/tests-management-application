@@ -28,7 +28,6 @@ var questionState = {
     errorANSWER_D: "",
     errorANSWER_PROPER: "",
     errorCATEGORY: "",
-    errorIMAGEURL: "",
 }
 
 var findResultState = {
@@ -63,7 +62,7 @@ class Validation {
         return teacherState;
     }
 
-    static newQuestionValidation = (body, answerA, answerB, answerC, answerD, properAnswer, category, imageUrl) => {
+    static newQuestionValidation = (body, answerA, answerB, answerC, answerD, properAnswer, category) => {
         body === "" ? questionState.errorBODY = "Question cannot be empty!" : questionState.errorBODY = "";
         answerA === "" ? questionState.errorANSWER_A = "This answer cannot be empty!" : questionState.errorANSWER_A = "";
         answerB === "" ? questionState.errorANSWER_B = "This answer cannot be empty!" : questionState.errorANSWER_B = "";
@@ -71,8 +70,7 @@ class Validation {
         answerD === "" ? questionState.errorANSWER_D = "This answer cannot be empty!" : questionState.errorANSWER_D = "";
         properAnswer === "" ? questionState.errorANSWER_PROPER = "Question must have its answer!" : questionState.errorANSWER_PROPER = "";
         category === "" ? questionState.errorCATEGORY = "Choose category!" : questionState.errorCATEGORY = "";
-        imageUrl === "" ? questionState.errorIMAGEURL = "" : !imageUrl.startsWith("img/") ? questionState.errorIMAGEURL = "Image url have to starts with img/ (example: img/question1.png)" : imageUrl.startsWith("img/") && imageUrl.length < 8 ? questionState.errorIMAGEURL = "Type proper image url!" : imageUrl.startsWith("img/") && imageUrl.length > 8 && (imageUrl.endsWith('.jpg') || imageUrl.endsWith('.png')) ? questionState.errorIMAGEURL = "" : questionState.errorIMAGEURL = "Type proper image url!";
-        body !== "" && answerA !== "" && answerB !== "" && answerC !== "" && answerD !== "" && properAnswer !== "" && category !== "" && ((imageUrl !== "" && imageUrl.startsWith('img/') && imageUrl.length > 8 && (imageUrl.endsWith('.jpg') || imageUrl.endsWith('.png'))) || imageUrl === "") ? questionState.isValid = true : questionState.isValid = false
+        body !== "" && answerA !== "" && answerB !== "" && answerC !== "" && answerD !== "" && properAnswer !== "" && category !== "" ? questionState.isValid = true : questionState.isValid = false
         return questionState;
     }
 

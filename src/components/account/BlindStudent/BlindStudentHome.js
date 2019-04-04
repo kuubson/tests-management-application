@@ -73,6 +73,7 @@ export class BlindStudentHome extends Component {
                 answerD: test[this.state.currentQuestion].answerD,
                 properAnswer: test[this.state.currentQuestion].properAnswer,
                 category: test[0].category,
+                points: 0,
                 totalPoints: test.length
             })
 
@@ -276,23 +277,22 @@ export class BlindStudentHome extends Component {
                                     savingResultProcess.data.done && this.props.socket.emit('sendResult', {
                                         login: this.state.login,
                                     })
+                                    this.setState({
+                                        body: "",
+                                        answerA: "",
+                                        answerB: "",
+                                        answerC: "",
+                                        answerD: "",
+                                        properAnswer: "",
+                                        category: "",
+                                        userAnswer: "",
+                                        totalPoints: 0,
+                                        currentQuestion: 0,
+                                        currentAnswer: 0,
+                                        isAnswered: false,
+                                        canSpeak: false
+                                    })
                                 }
-                                this.setState({
-                                    body: "",
-                                    answerA: "",
-                                    answerB: "",
-                                    answerC: "",
-                                    answerD: "",
-                                    properAnswer: "",
-                                    category: "",
-                                    userAnswer: "",
-                                    points: 0,
-                                    totalPoints: 0,
-                                    currentQuestion: 0,
-                                    currentAnswer: 0,
-                                    isAnswered: false,
-                                    canSpeak: false
-                                })
                             }
                         } else {
                             speech.cancel();
@@ -329,23 +329,22 @@ export class BlindStudentHome extends Component {
                                     savingResultProcess.data.done && this.props.socket.emit('sendResult', {
                                         login: this.state.login,
                                     })
+                                    this.setState({
+                                        body: "",
+                                        answerA: "",
+                                        answerB: "",
+                                        answerC: "",
+                                        answerD: "",
+                                        properAnswer: "",
+                                        category: "",
+                                        userAnswer: "",
+                                        totalPoints: 0,
+                                        currentQuestion: 0,
+                                        currentAnswer: 0,
+                                        isAnswered: false,
+                                        canSpeak: false
+                                    })
                                 }
-                                this.setState({
-                                    body: "",
-                                    answerA: "",
-                                    answerB: "",
-                                    answerC: "",
-                                    answerD: "",
-                                    properAnswer: "",
-                                    category: "",
-                                    userAnswer: "",
-                                    points: 0,
-                                    totalPoints: 0,
-                                    currentQuestion: 0,
-                                    currentAnswer: 0,
-                                    isAnswered: false,
-                                    canSpeak: false
-                                })
                             }
                         }
                     }

@@ -72,11 +72,15 @@ export class OrderedTest extends Component {
         let counter = 0;
         const orderedTest = questions.map(question => {
             counter++;
+            if (question.image) {
+                let imageUrl = btoa(new Uint8Array(question.image.data.data).reduce(function (data, byte) {
+                    return data + String.fromCharCode(byte);
+                }, ''));
+                question.imageUrl = imageUrl;
+            }
             return (
                 <div className="question" key={question._id} onClick={() => this.handleDeleteQuestion(question._id)}>
-                    {(!question.imageUrl.startsWith("img/")) ? (null) : (
-                        <img src={question.imageUrl} alt={question.imageUrl} />
-                    )}
+                    {question.imageUrl && <img src={`data:image/jpeg;base64,${question.imageUrl}`} alt="question" />}
                     <div className="body alert alert-dark font-weight-bold">{counter + ". " + question.body}</div>
                     <div className="answer alert alert-success">{"A. " + question.answerA}</div>
                     <div className="answer alert alert-success">{"B. " + question.answerB}</div>
@@ -100,11 +104,13 @@ export class OrderedTest extends Component {
             let counter = 0;
             const orderedTest = updatedQuestions.map(question => {
                 counter++;
+                if (question.image) {
+                    let imageUrl = btoa(String.fromCharCode(...new Uint8Array(question.image.data.data)));
+                    question.imageUrl = imageUrl;
+                }
                 return (
                     <div className="question" key={question._id} onClick={() => this.handleDeleteQuestion(question._id)}>
-                        {(!question.imageUrl.startsWith("img/")) ? (null) : (
-                            <img src={question.imageUrl} alt={question.imageUrl} />
-                        )}
+                        {question.imageUrl && <img src={`data:image/jpeg;base64,${question.imageUrl}`} alt="question" />}
                         <div className="body alert alert-dark font-weight-bold">{counter + ". " + question.body}</div>
                         <div className="answer alert alert-success">{"A. " + question.answerA}</div>
                         <div className="answer alert alert-success">{"B. " + question.answerB}</div>
