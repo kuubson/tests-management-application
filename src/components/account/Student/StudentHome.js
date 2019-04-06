@@ -74,29 +74,29 @@ export class StudentHome extends Component {
                 question.imageUrl = imageUrl;
             }
             return (
-                <div className="question" key={question._id}>
+                <div className="question studentQuestion" key={question._id}>
                     {question.imageUrl && <img src={`data:image/jpeg;base64,${question.imageUrl}`} alt="question" />}
                     <div className="body alert alert-dark font-weight-bold">{counter + ". " + question.body}</div>
                     <input id={`answerRadio1${question._id}`} type="radio" name={question._id} className="answerRadio" value="A" />
-                    <label htmlFor={`answerRadio1${question._id}`} className="label">
+                    <label htmlFor={`answerRadio1${question._id}`} className="label questionLabel">
                         <div className="answer studentAnswer alert alert-success">
                             {"A. " + question.answerA}
                         </div>
                     </label>
                     <input id={`answerRadio2${question._id}`} type="radio" name={question._id} className="answerRadio" value="B" />
-                    <label htmlFor={`answerRadio2${question._id}`} className="label">
+                    <label htmlFor={`answerRadio2${question._id}`} className="label questionLabel">
                         <div className="answer studentAnswer alert alert-success">
                             {"B. " + question.answerB}
                         </div>
                     </label>
                     <input id={`answerRadio3${question._id}`} type="radio" name={question._id} className="answerRadio" value="C" />
-                    <label htmlFor={`answerRadio3${question._id}`} className="label">
+                    <label htmlFor={`answerRadio3${question._id}`} className="label questionLabel">
                         <div className="answer studentAnswer alert alert-success">
                             {"C. " + question.answerC}
                         </div>
                     </label>
                     <input id={`answerRadio4${question._id}`} type="radio" name={question._id} className="answerRadio" value="D" />
-                    <label htmlFor={`answerRadio4${question._id}`} className="label">
+                    <label htmlFor={`answerRadio4${question._id}`} className="label questionLabel">
                         <div className="answer studentAnswer alert alert-success">
                             {"D. " + question.answerD}
                         </div>
