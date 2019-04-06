@@ -816,7 +816,27 @@ export class BlindStudentHome extends Component {
                                 <div className="alert alert-warning student-info">Aby zatwierdzić swoją odpowiedź kliknij klawisz F i powiedz "zatwierdź".</div>
                                 <div className="alert alert-warning student-info">Gdy po kliknięciu klawisza F i powiedzenia poprawnej komendy nie usłyszysz żadnej odpowiedzi, musisz powtórzyć kliknięcie F oraz powiedzenie komendy na nowo.</div>
                                 <div className="alert alert-warning student-info">Gdy test dobiegnie końca zostaniesz o tym poinformowany!</div>
-                            </div> : <div></div>}
+                            </div> : <div>
+                                        <div className="alert alert-success student-info">Instrukcje dla opcji rozwiązywania testu za pomocą klawiatury</div>
+                                        <div className="alert alert-warning student-info">Aby odsłuchać wiadomość powitalną ponownie naciśnij klawisz R</div>
+                                        <div className="alert alert-warning student-info">Aby rozpocząć test odsłuchaj pierwsze pytanie klikając spację.</div>
+                                        <div className="alert alert-warning student-info">Po zatwierdzeniu każdej udzielonej odpowiedzi otrzymasz informację czy była ona błędna czy poprawna. Kolejne pytanie wywołaj klawiszem spacja</div>
+                                        <div className="alert alert-warning student-info">Aby poruszać się pomiędzy odpowiedziami steruj klawiszami W oraz S. </div>
+                                        <div className="alert alert-warning student-info">Aby wybrać odpowiedź klikaj odpowiednio klawisze A, B, C lub D.</div>
+                                        <div className="alert alert-warning student-info">Aby zatwierdzić swoją odpowiedź kliknij klawisz ENTER.</div>
+                                        <div className="alert alert-warning student-info">Aby przerwać czytanie użyj klawisza X.</div>
+                                        <div className="alert alert-warning student-info">Gdy test dobiegnie końca zostaniesz o tym poinformowany!</div>
+                                        <div className="alert alert-success student-info">Instrukcje dla opcji rozwiązywania testu za pomocą głosu</div>
+                                        <div className="alert alert-warning student-info">Aby korzystać z funkcji sterowania głosem musisz mówić płynnie i wyraźnie. W przypadku nieuzyskania żadnej odpowiedzi kliknij ponownie F i powiedz komendę.</div>
+                                        <div className="alert alert-warning student-info">Aby odsłuchać wiadomość powitalną ponownie naciśnij F na klawiaturze i powiedz "instrukcja".</div>
+                                        <div className="alert alert-warning student-info">Aby rozpocząć test odsłuchaj pierwsze pytanie klikając F na klawiaturze i powiedz "pytanie".</div>
+                                        <div className="alert alert-warning student-info">Po zatwierdzeniu każdej udzielonej odpowiedzi otrzymasz informację czy była ona błędna czy poprawna. Kolejne pytanie wywołaj klikając przycisk F i powiedz "pytanie".</div>
+                                        <div className="alert alert-warning student-info">Aby poruszać się pomiędzy odpowiedziami kliknij F i powiedz "kolejna odpowiedź" lub "poprzednia odpowiedź".</div>
+                                        <div className="alert alert-warning student-info">Aby wybrać odpowiedź kliknij klawisz F i powiedz odpowiednio "odpowiedź a", "odpowiedź b", "odpowiedź c", "odpowiedź d".</div>
+                                        <div className="alert alert-warning student-info">Aby zatwierdzić swoją odpowiedź kliknij klawisz F i powiedz "zatwierdź".</div>
+                                        <div className="alert alert-warning student-info">Gdy po kliknięciu klawisza F i powiedzenia poprawnej komendy nie usłyszysz żadnej odpowiedzi, musisz powtórzyć kliknięcie F oraz powiedzenie komendy na nowo.</div>
+                                        <div className="alert alert-warning student-info">Gdy test dobiegnie końca zostaniesz o tym poinformowany!</div>
+                                    </div>}
                         </div>
                     </ul>
                 </div>
