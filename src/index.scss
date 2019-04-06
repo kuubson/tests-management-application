@@ -1,80 +1,244 @@
-html,
-body,
 #root,
-.tests-management-application {
+.tests-management-application,
+html,
+body {
     width: 100%;
     height: 100vh;
-    display: flex;
+    font-family: 'Courier New', Courier, monospace;
 }
+
+//MOST USED 2 CLASSES
 
 .flexfullwh {
     width: 100%;
     height: 100vh;
     display: flex;
-}
-
-.center {
-    margin: auto;
     text-align: center;
-}
 
-.error {
-    color: red;
-}
-
-.success {
-    color: lawngreen;
-}
-
-.warning {
-    color: orange;
-}
-
-// CHANGE FROM HERE CSS
-img {
-    width: 100%;
-    height: 200px;
-}
-
-.question {
-    width: 500px;
-    box-shadow: 0px 0px 10px;
-    margin: 20px;
-    padding: 20px;
-}
-
-button {
-    min-width: 100px;
-    height: 30px;
-}
-
-.cancel,
-.pdf,
-.logout,
-.send,
-.studentsList {
-    position: absolute;
-}
-
-.pdf {
-    left: 200px;
-}
-
-.cancel {
-    left: 100px;
-}
-
-.send {
-    left: 300px;
-}
-
-.studentsList {
-    top: 50px;
-    li {
-        list-style: none;
+    .btn {
+        margin-bottom: 17px;
     }
 }
 
-.body {
+.center {
+    position: relative;
+    width: 500px;
+    margin: auto;
+}
+
+//MOST USED 2 CLASSES
+
+.menu {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 25% 1fr;
+
+    .menu-list {
+        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        display: flex;
+        justify-content: center;
+
+        .menu-items {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+
+            .buttons {
+                margin-top: 30px;
+            }
+
+            .results {
+                margin-top: 10px;
+
+                .result {
+                    padding: 20px;
+
+                    &:first-child {
+                        border-top: 1px solid white;
+                    }
+
+                    &:last-child {
+                        border-bottom: 1px solid white;
+                    }
+
+                    p,
+                    b {
+                        margin: 0;
+                        padding: 0;
+                    }
+                }
+            }
+
+            .students {
+                margin-bottom: -11px;
+
+                .student {
+
+                    &:first-child {
+                        border-top: 1px solid white;
+                    }
+
+                    &:last-child {
+                        border-bottom: 1px solid white;
+                    }
+
+                    padding: 10px 20px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    text-transform: uppercase;
+                }
+            }
+
+        }
+    }
+}
+
+.foundResult {
+    width: 20vw;
+    margin-bottom: -1px;
+
+    p,
+    b {
+        margin: 10px 0px;
+    }
+
+    &:first-child {
+        border-top: 1px solid white;
+    }
+
+    &:last-child {
+        border-bottom: 1px solid white;
+    }
+}
+
+.teacher {
+    questions {
+        .question {
+            cursor: pointer;
+        }
+    }
+}
+
+.alert {
+    min-width: 300px;
+}
+
+.pointResult {
     font-weight: bold;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.result-info {
+    margin: auto;
+
+    .findResultsInput {
+        text-indent: 10px;
+        padding: 0;
+        margin: 0;
+        margin-bottom: -7px;
+    }
+}
+
+
+.studentResult {
+    .alert {
+        width: 50px;
+    }
+}
+
+.welcome {
+    padding: 20px;
+    height: 40px;
+    margin: 25px;
+    background: linear-gradient(0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    white-space: nowrap;
+    color: white;
+    box-shadow: 0px 0px 3px black;
+}
+
+.questions {
+    .question {
+        box-shadow: 0px 0px 15px black;
+        padding: 15px;
+        margin: 30px 0px;
+
+        input[type=radio]:checked+label .answer {
+            background: lightblue;
+        }
+
+        input[type=radio] {
+            display: none;
+        }
+
+        img {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .answer:last-child {
+            margin-bottom: 0px;
+        }
+    }
+
+}
+
+.answer:last-child {
+    margin-bottom: 0px;
+}
+
+.blind-student-info {
+    margin-top: 20px;
+}
+
+.student-info {
+    width: 1px;
+    min-height: 100px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 1s;
+    font-weight: bold;
+
+    &:hover {
+        background: white;
+        border: none;
+    }
+}
+
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+
+    .wave {
+        width: 2px;
+        height: 100px;
+        background: green;
+        margin: 5px;
+        animation: loadingAnimation 1s infinite;
+    }
+
+    @keyframes loadingAnimation {
+        0% {
+            height: 0px;
+        }
+
+        50% {
+            height: 30px;
+        }
+
+        100% {
+            height: 0px;
+        }
+    }
+
 }

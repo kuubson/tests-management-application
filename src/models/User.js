@@ -9,10 +9,9 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    role: {
+    type: {
         type: String,
         required: true,
-        default: 'student'
     },
     accountCreated: {
         type: Date,

@@ -1,25 +1,39 @@
 const dotenv = require('dotenv');
-dotenv.config();
-const port = process.env.PORT || 3001;
+require('./config/dotenv')(dotenv);
 
 const express = require('express');
 const app = express();
-
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
-const passport = require('passport');
+const port = process.env.PORT || 3001;
+const path = require('path');
 
-require('./config/passport')(passport);
+const io = require('socket.io')(http);
 require('./config/socket-io')(io);
 
 const mongoose = require('mongoose');
-const db = require('./config/db').MongoDB_URI;
-mongoose.connect(db, { useNewUrlParser: true }).then(() => console.log('Connected to database!')).catch(err => console.log("Could not connect to database!"));
+require('./config/db-connect')(mongoose);
+
+const passport = require('passport');
+require('./config/passport')(passport);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
-app.use('/users', require('./routes/users'));
-app.use('/test', require('./routes/test'));
+app.use('/', require('./routes/registerUser'));
+app.use('/', require('./routes/loginUser'));
+app.use('/', require('./routes/getUser'));
+app.use('/', require('./routes/getTest'));
+app.use('/', require('./routes/saveQuestion'));
+app.use('/', require('./routes/saveResult'));
+app.use('/', require('./routes/getResult'));
+app.use('/', require('./routes/getNewestResult'));
+
+app.use(express.static(path.resolve(__dirname, 'build')));
+
+app.use('/uploads', express.static(path.join(__dirname, './uploads')))
+
+app.get('/', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+});
 
 http.listen(port, () => console.log(`Server started at port ${port}`));

@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf'
 
-export const jspdf = function (questionsArray, clearString) {
+export const printToPdf = function (questionsArray, clearString) {
 
     var doc = new jsPDF('portrait', 'mm', 'a4');
     var lMargin = 15; //left margin in mm
@@ -22,7 +22,7 @@ export const jspdf = function (questionsArray, clearString) {
         let removeDiacriticalMarks = clearString(body);
         let content = doc.splitTextToSize(removeDiacriticalMarks, (pdfInMM - lMargin - rMargin));
         doc.text(content, pageCenter, height, 'center');
-        height += answerGap;
+        height += answerGap + 5;
 
         if (height > pageHeight - 30) {
             height = 0;
@@ -30,11 +30,12 @@ export const jspdf = function (questionsArray, clearString) {
             doc.addPage();
         }
 
-        if ((questionsArray[x].imageUrl !== "") && (questionsArray[x].imageUrl.startsWith("img/"))) {
+        if (questionsArray[x].image) {
 
-            var img = new Image();
-            img.src = questionsArray[x].imageUrl;
-            doc.addImage(img, pageCenter / 2.6, height, 140, 50);
+            let imageUrl = btoa(new Uint8Array(questionsArray[x].image.data.data).reduce(function (data, byte) {
+                return data + String.fromCharCode(byte);
+            }, ''));
+            doc.addImage(imageUrl, pageCenter / 2.6, height, 140, 50);
             height += 60;
 
             if (height > pageHeight - 60) {
@@ -81,6 +82,9 @@ export const jspdf = function (questionsArray, clearString) {
             doc.addPage();
         }
         counter++;
+
     }
+
     doc.save("Generated test.pdf");
+
 }

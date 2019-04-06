@@ -25,13 +25,14 @@ const QuestionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    imageUrl: {
-        type: String,
-    },
     category: {
         type: String,
         required: true
-    }
+    },
+    image: {
+        data: Buffer,
+        contentType: String,
+    },
 })
 
 const Question = mongoose.model('Question', QuestionSchema, 'questions');

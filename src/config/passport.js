@@ -7,7 +7,7 @@ const opts = {
     secretOrKey: process.env.SECRET_OR_KEY
 }
 
-module.exports = function (passport) {
+module.exports = (passport) => {
     passport.use(
         new JwtStrategy(opts, (payload, done) => {
             User.findOne({ login: payload.login }, (err, user) => {
