@@ -32,7 +32,7 @@ app.use(express.static(path.resolve(__dirname, 'build')));
 
 app.use('/uploads', express.static(path.join(__dirname, './uploads')))
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
 });
 
