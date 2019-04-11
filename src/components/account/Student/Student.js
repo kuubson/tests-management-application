@@ -7,7 +7,7 @@ export class Student extends Component {
         socket: "",
     }
     componentWillMount() {
-        const socket = io('http://localhost:3001/student');
+        const socket = io('/student');
         this.setState({ socket });
     }
     componentDidMount() {
