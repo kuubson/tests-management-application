@@ -41,7 +41,14 @@ module.exports = (io) => {
                         io.of('/student').to(student.id).emit('sendTest', questions);
                     }
                     if (student.type == 'blind-student') {
-                        io.of('/blindStudent').to(student.id).emit('sendTest', questions);
+                        const questionsWithoutImages = [];
+                        questions.map(question => {
+                            if (!question.image) {
+                                questionsWithoutImages.push(question);
+                            }
+                        })
+                        console.log(questionsWithoutImages);
+                        io.of('/blindStudent').to(student.id).emit('sendTest', questionsWithoutImages);
                     }
                 }
             })

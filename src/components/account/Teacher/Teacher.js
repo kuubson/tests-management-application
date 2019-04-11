@@ -20,7 +20,7 @@ export class Teacher extends Component {
         isGenerated: false
     }
     componentWillMount() {
-        const socket = io('/teacher');
+        const socket = io('http://localhost:3001/teacher');
         this.setState({ socket });
     }
     componentDidMount() {

@@ -342,6 +342,7 @@ export class BlindStudentHome extends Component {
                                     this.setState({
                                         points: this.state.points + 1,
                                         currentQuestion: this.state.currentQuestion + 1,
+                                        currentAnswer: 0,
                                         isAnswered: false
                                     })
                                     if (this.state.currentQuestion <= test.length - 1) {
@@ -399,6 +400,7 @@ export class BlindStudentHome extends Component {
                                     }, 500);
                                     this.setState({
                                         currentQuestion: this.state.currentQuestion + 1,
+                                        currentAnswer: 0,
                                         isAnswered: false
                                     })
                                     if (this.state.currentQuestion <= test.length - 1) {
@@ -657,6 +659,7 @@ export class BlindStudentHome extends Component {
                                     this.setState({
                                         points: this.state.points + 1,
                                         currentQuestion: this.state.currentQuestion + 1,
+                                        currentAnswer: 0,
                                         isAnswered: false
                                     })
                                     if (this.state.currentQuestion <= test.length - 1) {
@@ -714,6 +717,7 @@ export class BlindStudentHome extends Component {
                                     }, 500);
                                     this.setState({
                                         currentQuestion: this.state.currentQuestion + 1,
+                                        currentAnswer: 0,
                                         isAnswered: false
                                     })
                                     if (this.state.currentQuestion <= test.length - 1) {
